@@ -6,5 +6,5 @@ COPY package.json yarn.lock ./
 
 RUN yarn install
 
-#CMD ["yarn", "start:prod"]
-CMD ["yarn", "start:dev"]
+#CMD ["yarn", "start:dev"]
+CMD ["yarn", "start:prod"]
