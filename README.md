@@ -1,3 +1,89 @@
+# nest_foundation
+
+- **Project Name**: Nest Foundation
+- **Author**: Lucas Kim
+- **Contact**: [klucas5227@gmail.com](mailto:klucas5227@gmail.com)
+- **Summary**: `nest_foundation` is a project that utilizes Nest.js, PostgreSQL, and MinIO in a Dockerized environment. It provides a streamlined setup for building full-stack applications with a microservices architecture and cloud-native infrastructure.
+
+## Project Structure
+
+The project consists of the following directories and files:
+
+```bash
+nest_foundation/
+├── src/                        # Source code for the Nest.js application
+├── .env                        # Environment variables for the application
+├── .yarn/                      # Yarn Berry configuration directory
+├── .yarnrc.yml                 # Yarn configuration file
+├── docker-compose.yml          # Docker Compose configuration file
+├── Dockerfile                  # Dockerfile for building the Nest.js application
+├── README.md                   # Project documentation (this file)
+├── package.json                # Node.js dependencies and scripts
+├── yarn.lock                   # Yarn dependency lockfile
+└── tsconfig.json               # TypeScript configuration
+```
+
+
+## Docker Compose Services and Ports
+
+This project utilizes Docker Compose to manage and run the following services:
+
+### PostgreSQL
+- **Description**: A relational database service used by the Nest.js application.
+- **Image**: `postgres:15`
+- **Container Name**: `postgres`
+- **Ports**: `5432` (mapped to `localhost:5432`)
+- **Environment Variables**:
+    - `POSTGRES_USER`: `foundation`
+    - `POSTGRES_PASSWORD`: `foundation_5227
+    - `POSTGRES_DB`: `nest_foundation`
+
+### MinIO
+- **Description**: An object storage service used for managing files and media.
+- **Image**: `minio/minio`
+- **Container Name**: `minio`
+- **Ports**:
+    - `9000` (mapped to `localhost:9000`) - MinIO API port
+    - `9001` (mapped to `localhost:9001`) - MinIO Console port
+- **Environment Variables**:
+    - `MINIO_ROOT_USER`: `minio`
+    - `MINIO_ROOT_PASSWORD`: `minio_5227`
+
+### Nest-App
+- **Description**: The main Nest.js application that connects to PostgreSQL and MinIO.
+- **Build Context**: Uses the Dockerfile in the root directory to build the Nest.js application.
+- **Container Name**: `nest-app`
+- **Ports**: `3000` (mapped to `localhost:3000`)
+- **Environment Variables**:
+    - `DATABASE_HOST`: `foundation`
+    - `DATABASE_PORT`: `5432`
+    - `DATABASE_USER`: `nest_user`
+    - `DATABASE_PASSWORD`: `foundation_5227`
+    - `DATABASE_NAME`: `nest_foundation`
+    - `MINIO_ENDPOINT`: `http://minio:9000`
+    - `MINIO_ACCESS_KEY`: `minio`
+    - `MINIO_SECRET_KEY`: `minio_5227`
+
+## How to Run the Project
+
+To run the project, follow these steps:
+
+1. **Clone the repository:**
+
+   ```bash
+   $ git clone https://github.com/lucas5227/nest_foundation.git
+   $ cd nest_foundation
+   ```
+1. **Create a Docker network and start the services:**
+
+   ```bash
+   $ docker network create my_network
+   $ docker-compose up -d
+   ```
+   
+
+
+---
 <p align="center">
   <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
 </p>
