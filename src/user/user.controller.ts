@@ -3,16 +3,24 @@ import { Response } from 'express';
 
 @Controller('')
 export class UserController {
-  @Get(':path(*)') // 경로를 와일드카드 `(*)`로 모두 받아오기
+  @Get(':path(*)')
   async route(@Param('path') path: string, @Res() res: Response) {
-    // TODO: postgre 에서 메뉴 정보가져오기 & 메뉴트리 정보 서비스로 만들기
-    const menus = ['admin'];
+    if (path === '') path = 'home';
+    let page = '../'+path+'.ejs'; // page는 path와 동일한 파일 이름으로 사용
+
+    const menus = ['home', 'admin']; // 메뉴 목록 (데이터베이스에서 가져올 수도 있음)
     let route = path;
-    if (!menus.includes(path)) route = '404';
-    // path에 따라 동적으로 EJS 템플릿 렌더링
-    path = 'domain/' + path;
-    // TODO: layout + view 로 page rendering 하기
-    // idea layout.ejs 를 가져오고 layout.ejs 에서 include
-    return res.render(route, { path: path, message: `Rendering ${path}.ejs` });
+
+    if (!menus.includes(path)) {
+      route = '404'; // 없는 메뉴일 경우 404 페이지 설정
+    } else {
+      route = 'layout/layout'; // layout.ejs를 기본 레이아웃 파일로 사용
+    }
+    path = `domain/${path}`; // 예: 'domain/home.ejs'
+
+    const data = { path, page, message: `Rendering ${path}.ejs` };
+
+    return res.render(route, data);
   }
 }
+

@@ -2,7 +2,7 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { NestExpressApplication } from '@nestjs/platform-express';
 import { join } from 'path';
-import { NotFoundExceptionFilter } from "./http-exception/http-exception.filter";
+// import { NotFoundExceptionFilter } from "./http-exception/http-exception.filter";
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
@@ -14,7 +14,7 @@ async function bootstrap() {
   app.useStaticAssets(join(__dirname, '..', 'public'));
 
   // 예외 필터 등록 (글로벌 스코프) 하지만 와일드 카드로 라우트 하기떄문에 사용안함
-  app.useGlobalFilters(new NotFoundExceptionFilter());
+  // app.useGlobalFilters(new NotFoundExceptionFilter());
 
   await app.listen(3000);
 }

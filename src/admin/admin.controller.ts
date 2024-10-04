@@ -6,6 +6,8 @@ export class AdminController {
   @Get('')
   @Render('admin/index') // index.ejs 템플릿을 렌더링
   main() {
+    // TODO: 비로그인시 admin 접근 로그인
+    // TODO: 관리자 아닐때 user 메인으로
     return { message: 'Here is ADMIN MAIN!' };
   }
 }
