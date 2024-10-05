@@ -5,7 +5,7 @@
 */
 //
 // Scripts
-// 
+//
 
 window.addEventListener('DOMContentLoaded', event => {
 
@@ -23,7 +23,7 @@ window.addEventListener('DOMContentLoaded', event => {
 
     };
 
-    // Shrink the navbar 
+    // Shrink the navbar
     navbarShrink();
 
     // Shrink the navbar when page is scrolled
@@ -56,4 +56,27 @@ window.addEventListener('DOMContentLoaded', event => {
         elements: '#portfolio a.portfolio-box'
     });
 
+});
+
+// <!-- Custom JS to enable dropdown-submenu -->
+// Enable hover and click support for multi-level dropdown menus
+document.querySelectorAll('.dropdown-submenu a.dropdown-toggle').forEach(function(element) {
+    element.addEventListener('click', function(e) {
+        if (window.innerWidth < 992) {
+            e.preventDefault();
+            const nextEl = element.nextElementSibling;
+            if (nextEl && nextEl.classList.contains('dropdown-menu')) {
+                nextEl.classList.toggle('show');
+            }
+        }
+    });
+});
+
+// Close submenus when clicking outside
+window.addEventListener('click', function(e) {
+    document.querySelectorAll('.dropdown-submenu .dropdown-menu').forEach(function(submenu) {
+        if (!submenu.contains(e.target)) {
+            submenu.classList.remove('show');
+        }
+    });
 });
