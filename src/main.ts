@@ -9,9 +9,6 @@ import { join } from 'path';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
-console.log(__dirname);
-console.log(__dirname);
-console.log(process.cwd());
   // EJS 템플릿 엔진 설정
   app.setViewEngine('ejs');
   // app.setBaseViewsDir(join(__dirname, '..', 'views'));

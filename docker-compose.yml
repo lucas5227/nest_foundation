@@ -8,6 +8,8 @@ services:
       POSTGRES_USER: foundation
       POSTGRES_PASSWORD: foundation_5227
       POSTGRES_DB: nest_foundation
+      POSTGRES_HOST: localhost
+      POSTGRES_PORT: 5432
     ports:
       - '5432:5432'
     volumes:
@@ -36,12 +38,12 @@ services:
     environment:
       DATABASE_HOST: postgres
       DATABASE_PORT: 5432
-      DATABASE_USER: nest_user
-      DATABASE_PASSWORD: nest_password
-      DATABASE_NAME: nest_db
+      DATABASE_USER: foundation
+      DATABASE_PASSWORD: foundation_5227
+      DATABASE_NAME: nest_foundation
       MINIO_ENDPOINT: http://minio:9000
       MINIO_ACCESS_KEY: minio
-      MINIO_SECRET_KEY: minio123
+      MINIO_SECRET_KEY: minio_5227
     ports:
       - '3000:3000'
     depends_on:
