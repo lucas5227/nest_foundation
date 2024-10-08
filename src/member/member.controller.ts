@@ -7,13 +7,11 @@ export class MemberController {
   constructor(private readonly memberService: MemberService) {}
 
   @Post('/register')
-  async registerMember()
-  {
-    return "registerMember";
+  async registerMember(
+    @Body() createMemberDto: Partial<MemberEntity>,
+  ): Promise<MemberEntity> {
+    console.log(createMemberDto);
+    console.log("LK::");
+    return this.memberService.registerMember(createMemberDto);
   }
-  // async registerMember(
-  //   @Body() createMemberDto: Partial<MemberEntity>,
-  // ): Promise<MemberEntity> {
-  //   return this.memberService.registerMember(createMemberDto);
-  // }
 }

@@ -26,14 +26,14 @@ export class MemberEntity {
   @Property({ type: 'datetime', nullable: true })
   mem_register_datetime?: Date;
 
-  @Property()
-  mem_register_ip!: string;
+  // @Property()
+  // mem_register_ip!: string;
 
   @Property({ type: 'datetime', nullable: true })
   mem_lastlogin_datetime?: Date;
 
-  @Property()
-  mem_lastlogin_ip!: string;
+  // @Property()
+  // mem_lastlogin_ip!: string;
 
   @Property({ type: 'tinyint', default: 0 })
   mem_is_admin!: number;
