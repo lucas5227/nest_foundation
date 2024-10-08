@@ -12,4 +12,5 @@ const config: Options<PostgreSqlDriver> = {
   entities: ['./dist/entities'],
   entitiesTs: ['./src/entities'],
 };
+
 export default config;

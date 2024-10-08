@@ -1,4 +1,4 @@
-import { Controller, Get, Param, Res } from '@nestjs/common';
+import { Controller, Get, Param, Post, Res } from '@nestjs/common';
 import { Response } from 'express';
 
 @Controller('')
@@ -6,7 +6,7 @@ export class UserController {
   @Get(':path(*)')
   async route(@Param('path') path: string, @Res() res: Response) {
     if (path === '') path = 'home';
-    let page = '../'+path+'.ejs'; // page는 path와 동일한 파일 이름으로 사용
+    let page = '../' + path + '.ejs'; // page는 path와 동일한 파일 이름으로 사용
 
     const menus = ['home', 'admin']; // 메뉴 목록 (데이터베이스에서 가져올 수도 있음)
     const singlePage = ['register']; // 메뉴 목록 (데이터베이스에서 가져올 수도 있음)
@@ -26,4 +26,3 @@ export class UserController {
     return res.render(route, data);
   }
 }
-

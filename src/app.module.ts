@@ -5,13 +5,19 @@ import { AdminModule } from './admin/admin.module';
 import { AdminController } from './admin/admin.controller';
 
 import { MikroOrmModule } from '@mikro-orm/nestjs';
+import { MemberController } from './member/member.controller';
+import { MemberService } from './member/member.service';
+import { MemberModule } from './member/member.module';
 import mikroOrmConfig from './mikro-orm.config'; // MikroORM 설정 파일 경로
 
 @Module({
   imports: [
     MikroOrmModule.forRoot(mikroOrmConfig),
-    AdminModule, UserModule],
-  controllers: [AdminController, UserController],
-  // providers: [AppService],
+    AdminModule, //관리자
+    UserModule, //사용자
+    MemberModule, //회원
+  ],
+  controllers: [AdminController, UserController, MemberController],
+  providers: [MemberService],
 })
 export class AppModule {}
