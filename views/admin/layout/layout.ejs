@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <title>Admin</title>
+    <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
+    <link href="/admin/css/styles.css" rel="stylesheet" />
+    <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+</head>
+<body class="sb-nav-fixed">
+<nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
+    <!-- Navbar Brand-->
+    <a class="navbar-brand ps-3" href="/admin">Web Title</a>
+    <!-- Sidebar Toggle-->
+    <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i class="fas fa-bars"></i></button>
+    <!-- Navbar Search-->
+    <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
+<!--        <div class="input-group">-->
+<!--            <input class="form-control" type="text" placeholder="Search for..." aria-label="Search for..." aria-describedby="btnNavbarSearch" />-->
+<!--            <button class="btn btn-primary" id="btnNavbarSearch" type="button"><i class="fas fa-search"></i></button>-->
+<!--        </div>-->
+    </form>
+    <!-- Navbar-->
+    <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
+            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                <li><a class="dropdown-item" href="#!">Settings</a></li>
+                <li><a class="dropdown-item" href="#!">Activity Log</a></li>
+                <li><hr class="dropdown-divider" /></li>
+                <li><a class="dropdown-item" href="#!">Logout</a></li>
+            </ul>
+        </li>
+    </ul>
+</nav>
+<div id="layoutSidenav">
+    <div id="layoutSidenav_nav">
+        <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
+            <div class="sb-sidenav-menu">
+                <div class="nav">
+                    <div class="sb-sidenav-menu-heading">Core</div>
+                    <a class="nav-link" href="">
+                        <div class="sb-nav-link-icon"><i class="fas fa-user-alt color-red"></i></div>
+                        Admin Menu
+                    </a>
+                    <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseBasics" aria-expanded="false" aria-controls="collapseBasics">
+                        <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
+                        Basic
+                        <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                    </a>
+                    <div class="collapse" id="collapseBasics" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
+                        <nav class="sb-sidenav-menu-nested nav">
+                            <a class="nav-link" href="layout-static.html">기본정보-layout</a>
+                            <a class="nav-link" href="layout-sidenav-light.html">기본정보(회사정보)</a>
+                            <a class="nav-link" href="layout-sidenav-light.html">메타태그/파비콘</a>
+                            <a class="nav-link" href="layout-sidenav-light.html">약관관리</a>
+                            <a class="nav-link" href="layout-sidenav-light.html">접급기능</a>
+                            <a class="nav-link" href="layout-sidenav-light.html">알림기능</a>
+                        </nav>
+                    </div>
+                    <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseRegis" aria-expanded="false" aria-controls="collapseRegis">
+                        <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
+                        회원가입설정
+                        <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                    </a>
+                    <div class="collapse" id="collapseRegis" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
+                        <nav class="sb-sidenav-menu-nested nav">
+                            <a class="nav-link" href="layout-static.html">기본설정</a>
+                            <a class="nav-link" href="layout-sidenav-light.html">가입폼관리</a>
+                            <a class="nav-link" href="layout-sidenav-light.html">정보수정시(기간설정)</a>
+                            <a class="nav-link" href="layout-sidenav-light.html">로그(시도횟수)</a>
+                            <a class="nav-link" href="layout-sidenav-light.html">알림 설정(알림설정, 매일/문자발송양식)</a>
+                            <a class="nav-link" href="layout-sidenav-light.html">소셜 로그인</a>
+                        </nav>
+                    </div>
+                    <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseTemplates" aria-expanded="false" aria-controls="collapseTemplates">
+                        <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
+                        매일/문자발송양식
+                        <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                    </a>
+                    <div class="collapse" id="collapseTemplates" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
+                        <nav class="sb-sidenav-menu-nested nav">
+                            <a class="nav-link" href="layout-static.html">회원가입</a>
+                            <a class="nav-link" href="layout-sidenav-light.html">패스워드변경</a>
+                            <a class="nav-link" href="layout-sidenav-light.html">회원탈퇴</a>
+                            <a class="nav-link" href="layout-sidenav-light.html">이메일변경시인증메일</a>
+                            <a class="nav-link" href="layout-sidenav-light.html">회원정보찾기</a>
+                            <a class="nav-link" href="layout-sidenav-light.html">게시글작섣</a>
+                            <a class="nav-link" href="layout-sidenav-light.html">댓글작섣</a>
+                        </nav>
+                    </div>
+
+                    <div class="sb-sidenav-menu-heading">Interface</div>
+                    <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
+                        <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
+                        Layouts
+                        <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                    </a>
+                    <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
+                        <nav class="sb-sidenav-menu-nested nav">
+                            <a class="nav-link" href="layout-static.html">Site Map</a>
+                            <a class="nav-link" href="layout-sidenav-light.html">Page</a>
+                            <a class="nav-link" href="layout-sidenav-light.html">Board</a>
+                            <a class="nav-link" href="layout-sidenav-light.html">Link</a>
+                            <a class="nav-link" href="layout-sidenav-light.html">Custom</a>
+                        </nav>
+                    </div>
+                    <a class="nav-link" href="charts.html">
+                        <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
+                        Popup
+                    </a>
+
+
+
+                    <div class="sb-sidenav-menu-heading">Members</div>
+                    <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseMembers" aria-expanded="false" aria-controls="collapseMembers">
+                        <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
+                        Members
+                        <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                    </a>
+                    <div class="collapse" id="collapseMembers" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
+                        <nav class="sb-sidenav-menu-nested nav">
+                            <a class="nav-link" href="/admin/memberList">회원관리</a>
+                            <a class="nav-link" href="layout-sidenav-light.html">회원그룹관리</a>
+                            <a class="nav-link" href="layout-sidenav-light.html">로그인현황</a>
+                            <a class="nav-link" href="layout-sidenav-light.html">휴면계정관리</a>
+                        </nav>
+                    </div>
+
+                    <div class="sb-sidenav-menu-heading">Boards</div>
+                    <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseBoards" aria-expanded="false" aria-controls="collapseBoards">
+                        <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
+                        Boards
+                        <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                    </a>
+                    <div class="collapse" id="collapseBoards" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
+                        <nav class="sb-sidenav-menu-nested nav">
+                            <a class="nav-link" href="layout-static.html">Board 1</a>
+                            <a class="nav-link" href="layout-static.html">Board 2</a>
+                            <a class="nav-link" href="layout-static.html">Board 3</a>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            <div class="sb-sidenav-footer">
+                <div class="small">Logged in as:</div>
+                Start Bootstrap
+            </div>
+        </nav>
+    </div>
+    <div id="layoutSidenav_content">
+        <main>
+            <%- include('../'+page) %>
+        </main>
+        <footer class="py-4 bg-light mt-auto">
+            <div class="container-fluid px-4">
+                <div class="d-flex align-items-center justify-content-between small">
+                    <div class="text-muted">Copyright &copy; Your Website 2023</div>
+                    <div>
+                        <a href="#">Privacy Policy</a>
+                        &middot;
+                        <a href="#">Terms &amp; Conditions</a>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+<script src="/admin/js/scripts.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
+<script src="/admin/assets/demo/chart-area-demo.js"></script>
+<script src="/admin/assets/demo/chart-bar-demo.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js" crossorigin="anonymous"></script>
+<script src="/admin/js/datatables-simple-demo.js"></script>
+</body>
+</html>

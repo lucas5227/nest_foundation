@@ -8,10 +8,8 @@ export class MemberController {
 
   @Post('/register')
   async registerMember(
-    @Body() createMemberDto: Partial<MemberEntity>,
+    @Body() createMemberDto: Partial<MemberEntity>
   ): Promise<MemberEntity> {
-    console.log(createMemberDto);
-    console.log("LK::");
     return this.memberService.registerMember(createMemberDto);
   }
 }

@@ -17,7 +17,9 @@ export class MemberService {
    * @param createMemberDto 새로운 회원의 정보를 포함한 DTO (Partial<MemberEntity> 타입)
    * @returns 등록된 회원 엔티티 객체
    */
-  async registerMember(createMemberDto: Partial<MemberEntity>): Promise<MemberEntity> {
+  async registerMember(
+    createMemberDto: Partial<MemberEntity>,
+  ): Promise<MemberEntity> {
     // DTO 데이터를 사용하여 새로운 회원 엔티티 생성
     const newMember = this.memberRepository.create(createMemberDto);
 
@@ -29,4 +31,12 @@ export class MemberService {
     return newMember; // 등록된 회원 엔티티 객체 반환
   }
 
+  /**
+   * 모든 회원 정보를 조회하는 메서드
+   * @returns 모든 회원 엔티티 배열
+   */
+  async getAllMember(): Promise<MemberEntity[]> {
+    const members = await this.memberRepository.findAll();
+    return members;
+  }
 }
