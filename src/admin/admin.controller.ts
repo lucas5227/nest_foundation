@@ -8,7 +8,7 @@ export class AdminController {
 
   @Get('')
   @Render('admin/layout/layout') // index.ejs 템플릿을 렌더링
-  main() {
+  async main() {
     // TODO: 비로그인시 admin 접근 로그인
     // TODO: 관리자 아닐때 user 메인으로
     return {page:'main.ejs', message: 'Here is ADMIN MAIN!' };
@@ -16,12 +16,10 @@ export class AdminController {
 
   @Get('memberList')
   @Render('admin/layout/layout') // index.ejs 템플릿을 렌더링
-  memberList() {
+  async memberList() {
     // TODO: 비로그인시 admin 접근 로그인
     // TODO: 관리자 아닐때 user 메인으로
-    const allMember = this.memberService.getAllMember();
-    console.log(allMember);
-    console.log('회원 목록 (JSON):', JSON.stringify(allMember, null, 2));
+    const allMember = await this.memberService.getAllMember();
 
     return {page:'memberList.ejs', title: '회원관리' , members:allMember};
   }

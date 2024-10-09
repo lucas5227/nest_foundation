@@ -37,6 +37,8 @@ export class MemberService {
    */
   async getAllMember(): Promise<MemberEntity[]> {
     const members = await this.memberRepository.findAll();
+
+    console.log(members);
     return members;
   }
 }
