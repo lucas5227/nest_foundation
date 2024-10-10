@@ -40,11 +40,15 @@ export class MemberService {
 
   async deleteMember(mem_id: number): Promise<void> {
     // id를 기준으로 회원을 조회하기 위해 객체로 전달합니다.
-    const member = await this.memberRepository.findOne({ mem_id: mem_id });
-
+    const member = this.getOneMember(mem_id)
     if (!member) {
       throw new NotFoundException(`Member with ID ${mem_id} not found`);
     }
     await this.em.removeAndFlush(member); // 엔티티를 제거합니다.
+  }
+
+  async getOneMember(mem_id: number) {
+    const member = await this.memberRepository.findOne({ mem_id: mem_id });
+    return member;
   }
 }

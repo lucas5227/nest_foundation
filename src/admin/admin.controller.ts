@@ -1,4 +1,4 @@
-import { Controller, Get, Render } from '@nestjs/common';
+import { Controller, Get, Param, Render } from '@nestjs/common';
 import { MemberService } from '../member/member.service';
 
 // TODO: .env 에서 admin 주소 변경가능하게끔 기존 conf 는 env 에 넣는다.
@@ -22,5 +22,14 @@ export class AdminController {
     const allMember = await this.memberService.getAllMember();
 
     return {page:'memberList.ejs', title: '회원관리' , members:allMember};
+  }
+
+  @Get('member/:id')
+  @Render('admin/layout/layout') // index.ejs 템플릿을 렌더링
+  async memberView(@Param('id') mem_id: number) {
+    // TODO: 비로그인시 admin 접근 로그인
+    // TODO: 관리자 아닐때 user 메인으로
+    const member = await this.memberService.getOneMember(mem_id);
+    return {page:'memberWrite.ejs', title: '회원정보수정' , member:member};
   }
 }
