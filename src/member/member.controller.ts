@@ -1,4 +1,4 @@
-import { Body, Controller, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Param, Post } from '@nestjs/common';
 import { MemberEntity } from '../entities/member.entity';
 import { MemberService } from './member.service';
 
@@ -6,10 +6,15 @@ import { MemberService } from './member.service';
 export class MemberController {
   constructor(private readonly memberService: MemberService) {}
 
-  @Post('/register')
+  @Post('/member/register')
   async registerMember(
-    @Body() createMemberDto: Partial<MemberEntity>
+    @Body() createMemberDto: Partial<MemberEntity>,
   ): Promise<MemberEntity> {
     return this.memberService.registerMember(createMemberDto);
+  }
+
+  @Delete('/member/delete/:id')
+  async deleteMember(@Param('id') mem_id: number) {
+    return this.memberService.deleteMember(mem_id);
   }
 }

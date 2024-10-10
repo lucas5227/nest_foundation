@@ -47,7 +47,10 @@
                         <td><%= member.mem_username %></td>
                         <td><%= member.mem_email %></td>
                         <td><%= member.mem_register_datetime %></td>
-                        <td><button>edit</button><button>del</button></td>
+                        <td>
+                            <button>edit</button>
+                            <button onclick="list_deleteOne('/member/delete', '<%= member.mem_id %>')">del</button>
+                        </td>
                     </tr>
                 <% }); %>
                 </tbody>

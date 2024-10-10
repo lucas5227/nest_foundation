@@ -1,5 +1,5 @@
 // src/member/member.service.ts
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@mikro-orm/nestjs';
 import { MemberEntity } from '../entities/member.entity';
 import { EntityManager, EntityRepository } from '@mikro-orm/core';
@@ -26,8 +26,6 @@ export class MemberService {
     // EntityManager의 persistAndFlush 메서드를 사용하여 데이터베이스에 저장
     // await this.em.persist(newMember).flush();
     await this.em.persistAndFlush(newMember);
-
-    console.log(newMember);
     return newMember; // 등록된 회원 엔티티 객체 반환
   }
 
@@ -37,8 +35,16 @@ export class MemberService {
    */
   async getAllMember(): Promise<MemberEntity[]> {
     const members = await this.memberRepository.findAll();
-
-    console.log(members);
     return members;
+  }
+
+  async deleteMember(mem_id: number): Promise<void> {
+    // id를 기준으로 회원을 조회하기 위해 객체로 전달합니다.
+    const member = await this.memberRepository.findOne({ mem_id: mem_id });
+
+    if (!member) {
+      throw new NotFoundException(`Member with ID ${mem_id} not found`);
+    }
+    await this.em.removeAndFlush(member); // 엔티티를 제거합니다.
   }
 }
