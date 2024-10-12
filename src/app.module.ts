@@ -7,8 +7,8 @@ import { AdminController } from './admin/admin.controller';
 
 import { MikroOrmModule } from '@mikro-orm/nestjs';
 import { MemberController } from './member/member.controller';
-import { MemberService } from './member/member.service';
 import { MemberModule } from './member/member.module';
+import { PostModule } from './post/post.module';
 import mikroOrmConfig from './mikro-orm.config'; // MikroORM 설정 파일 경로
 
 // src/app.module.ts
@@ -17,7 +17,8 @@ import mikroOrmConfig from './mikro-orm.config'; // MikroORM 설정 파일 경�
     MikroOrmModule.forRoot(mikroOrmConfig),
     AdminModule,
     UserModule,
-    MemberModule, // 회원 모듈 추가
+    MemberModule,
+    PostModule,
   ],
   controllers: [AdminController, UserController, MemberController],
   // providers: [MemberService], // 이 줄을 제거합니다.

@@ -1,10 +1,17 @@
-import { Controller, Get, Param, Post, Query, Redirect, Render } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Query, Redirect, Render, Req } from '@nestjs/common';
 import { MemberService } from '../member/member.service';
+import { PostService } from '../post/post.service';
+import { PostEntity } from '../entities/Post';
+import { Request } from 'express';
 
 // TODO: .env 에서 admin 주소 변경가능하게끔 기존 conf 는 env 에 넣는다.
 @Controller('admin')
 export class AdminController {
-  constructor(private readonly memberService: MemberService) { }
+  constructor(
+    private readonly memberService: MemberService,
+    private readonly PostService: PostService,
+  ) {
+  }
 
   @Get('')
   @Render('admin/layout/layout') // index.ejs 템플릿을 렌더링
@@ -33,34 +40,37 @@ export class AdminController {
     return { page: 'memberWrite.ejs', title: '회원정보수정', member: member };
   }
 
-  @Get('board/write/:board_key')
+  @Get('board/write/:brd_key')
   @Render('admin/layout/layout') // index.ejs 템플릿을 렌더x`링
   async postWrite() {
     // TODO: 비로그인시 admin 접근 로그인
     // TODO: 관리자 아닐때 user 메인으로
-    console.log('board/write');
     const post = await this.memberService.getAllMember();
 
     return { page: 'boardWrite.ejs', title: 'boardTitle', data: post };
   }
-  @Post('/board/write/:board_key')
-  @Redirect('/admin/board/brd_key')
-  async writePost(@Param('board_key') board_key: string){
-    return `Redirecting to admin/board/${board_key}`;
 
+  @Post('/board/write/:brd_key')
+  @Redirect('/admin/board/brd_key')
+  async createPost(@Body() createPost: Partial<PostEntity>, @Req() req: Request): Promise<number> {
+    createPost.post_register_ip = req.ip;
+    return this.PostService.createPost(createPost);
   }
 
-  @Get('board/:key')
-  @Render('admin/layout/layout') // index.ejs 템플릿을 렌더x`링
-  async list(@Param('key') board_key: string, @Query('category_id') category_id: string) {
+  @Get('board/:brd_key')
+  @Render('admin/layout/layout')
+  async list(@Param('brd_key') brd_key: string, @Query('cat_id') cat_id: string, @Query('page') page: number) {
     // TODO: 비로그인시 admin 접근 로그인
     // TODO: 관리자 아닐때 user 메인으로
-    console.log('Board Key:', board_key);
-    console.log('Category ID:', category_id);
+    console.log('Board Key:', brd_key);
+    console.log('Category ID:', cat_id);
 
-    const list = await this.memberService.getAllMember();
+    const limit = 10; // 페이지당 항목 수
+    const offset = (page - 1) * limit; // 현재 페이지에 따라 offset 계산
 
+    const list = await this.PostService.getListPost(offset, limit);
+
+    console.log(list);
     return { page: 'boardList.ejs', title: 'boardTitle', data: list };
   }
-
 }

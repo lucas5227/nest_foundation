@@ -9,10 +9,10 @@
             <a class="nav-link active" href="/admin/baoard/brd_key">전체</a>
         </li>
         <li class="nav-item" role="presentation">
-            <a class="nav-link active" href="/admin/board/brd_key?category_id=1">Category 1</a>
+            <a class="nav-link active" href="/admin/board/brd_key?cat_id=1">Category 1</a>
         </li>
         <li class="nav-item" role="presentation">
-            <a class="nav-link active" href="/admin/board/brd_key?category_id=2">Category 2</a>
+            <a class="nav-link active" href="/admin/board/brd_key?cat_id=2">Category 2</a>
         </li>
     </ul>
 
@@ -35,27 +35,15 @@
             </tr>
         </thead>
         <tbody>
+        <% data.forEach((post) => { %>
             <tr>
                 <th scope="row">1</th>
-                <td><a href="#">첫 번째 게시글입니다.</a></td>
+                <td><a href="#"><%= post.post_title %></a></td>
                 <td>홍길동</td>
                 <td>2024-10-12</td>
                 <td>123</td>
             </tr>
-            <tr>
-                <th scope="row">2</th>
-                <td><a href="#">두 번째 게시글입니다.</a></td>
-                <td>김영희</td>
-                <td>2024-10-11</td>
-                <td>98</td>
-            </tr>
-            <tr>
-                <th scope="row">3</th>
-                <td><a href="#">세 번째 게시글입니다.</a></td>
-                <td>이철수</td>
-                <td>2024-10-10</td>
-                <td>76</td>
-            </tr>
+        <% }); %>
             <!-- 더 많은 게시글이 여기에 추가될 수 있습니다 -->
         </tbody>
     </table>
