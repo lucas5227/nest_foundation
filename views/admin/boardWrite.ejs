@@ -1,0 +1,67 @@
+<div class="container mt-5">
+    <h2>게시물 작성</h2>
+    <form action="/admin/board/write/1" method="POST">
+        <input type="hidden" name="cmd" value="" />
+        <table class="table">
+            <tbody>
+                <tr>
+                    <td><label for="postTitle" class="form-label">제목</label></td>
+                    <td>
+                        <input type="text" class="form-control" id="postTitle" name="postTitle" placeholder="게시물 제목을 입력하세요" required>
+                    </td>
+                </tr>
+                <tr>
+                    <td><label for="postCategory" class="form-label">카테고리</label></td>
+                    <td>
+                        <select class="form-select" id="postCategory" name="postCategory" required>
+                            <option value="" disabled selected>카테고리를 선택하세요</option>
+                            <option value="1">기술</option>
+                            <option value="2">생활</option>
+                            <option value="3">뉴스</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td><label for="postContent" class="form-label">내용</label></td>
+                    <td>
+                        <div id="summernote" name="postContent"></div>
+                    </td>
+                </tr>
+                <tr>
+                    <td><label for="attachment1" class="form-label">첨부파일 1</label></td>
+                    <td>
+                        <input type="file" class="form-control" id="attachment1" name="attachment1">
+                    </td>
+                </tr>
+                <tr>
+                    <td><label for="attachment2" class="form-label">첨부파일 2</label></td>
+                    <td>
+                        <input type="file" class="form-control" id="attachment2" name="attachment2">
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2" class="text-end">
+                        <button type="submit" class="btn btn-primary">작성하기</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </form>
+</div>
+
+<script>
+    $('#summernote').summernote({
+      placeholder: 'Hello stand alone ui',
+      tabsize: 2,
+      height: 120,
+      toolbar: [
+        ['style', ['style']],
+        ['font', ['bold', 'underline', 'clear']],
+        ['color', ['color']],
+        ['para', ['ul', 'ol', 'paragraph']],
+        ['table', ['table']],
+        ['insert', ['link', 'picture', 'video']],
+        ['view', ['fullscreen', 'codeview', 'help']]
+      ]
+    });
+  </script>
