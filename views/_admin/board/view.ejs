@@ -1,0 +1,107 @@
+<div class="container my-5">
+    <form method="POST" id="boardFrm">
+        <input type="hidden" name="csrf_test_name" value="a35497f82b9d95e5954e5e2b93ac6670">
+        <input type="hidden" name="chk[]" id="chk" value="36737">
+        <input type="hidden" name="brd_id" value="115">
+
+        <div class="mb-4 row">
+            <label class="col-sm-2 col-form-label">제목</label>
+            <div class="col-sm-10">
+                <p class="form-control-plaintext"><%-data.post_title%></p>
+            </div>
+        </div>
+
+        <div class="mb-4 row">
+            <label class="col-sm-2 col-form-label">썸네일</label>
+            <div class="col-sm-10">
+                <img src="http://kg70.nosboard.kr/" alt="Thumbnail Image" title="Thumbnail Image" class="img-fluid" style="max-width:10%;">
+            </div>
+        </div>
+
+        <div class="mb-4 row">
+            <label class="col-sm-2 col-form-label">내용</label>
+            <div class="col-sm-10">
+                <p class="form-control-plaintext"><%-data.post_content%></p>
+            </div>
+        </div>
+
+        <div class="d-flex justify-content-end">
+            <button type="button" onclick="location.href='/admin/aboard/boards?brd_id=115'" class="btn btn-outline-secondary me-2">목록</button>
+            <button type="button" onclick="location.href='/admin/aboard/boards/update?brd_id=115&amp;post_id=36737&amp;status=update'" class="btn btn-primary me-2">수정</button>
+            <button type="button" onclick="go_submit('delete');" class="btn btn-danger">삭제</button>
+        </div>
+    </form>
+
+    <h3 class="mt-5">댓글</h3>
+
+    <div id="viewcomment" class="mt-4">
+        <div class="media mb-4" id="comment_7610">
+            <div class="media-body">
+                <h5 class="media-heading">원종욱</h5>
+                <p>신청 접수 마감되었습니다</p>
+                <div class="d-flex justify-content-between align-items-center">
+                    <small class="text-muted">2024-06-29 | 1.224.157.193</small>
+                    <div>
+                        <a href="javascript:;" onclick="comment_box('7610', 'c'); return false;" class="btn btn-sm btn-outline-secondary me-2">답글</a>
+                        <a href="javascript:;" onclick="comment_box('7610', 'cu'); return false;" class="btn btn-sm btn-outline-secondary me-2">수정</a>
+                        <a href="javascript:;" onclick="delete_comment('7610', '36737');" class="btn btn-sm btn-outline-danger">삭제</a>
+                    </div>
+                </div>
+                <span id="edit_7610"></span>
+                <span id="reply_7610"></span>
+                <input type="hidden" value="0" id="secret_comment_7610">
+                <textarea id="save_comment_7610" style="display:none">신청 접수 마감되었습니다</textarea>
+            </div>
+        </div>
+    </div>
+
+    <div class="comment_write" id="comment_write_box">
+        <div class="card p-4">
+            <div class="alert alert-dismissible fade show d-none alert-comment-message">
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                <span class="alert-comment-message-content"></span>
+            </div>
+
+            <form class="comment_write-inn" name="fcomment" id="fcomment" method="post" accept-charset="utf-8" novalidate>
+                <input type="hidden" name="csrf_test_name" value="a35497f82b9d95e5954e5e2b93ac6670">
+                <input type="hidden" name="mode" id="mode" value="c">
+                <input type="hidden" name="post_id" value="36737">
+                <input type="hidden" name="cmt_id" value="" id="cmt_id">
+                <input type="hidden" name="cmt_page" value="" id="cmt_page">
+
+                <div class="mb-3">
+                    <textarea class="form-control" name="cmt_content" id="cmt_content" placeholder="댓글을 작성해주세요." rows="3"></textarea>
+                </div>
+
+                <div class="d-flex justify-content-end">
+                    <button type="button" class="btn btn-primary" id="cmt_btn_submit" onclick="add_comment(this.form, '36737');">댓글 등록</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+  function go_submit(action) {
+    if (action === "delete" && confirm("삭제하시겠습니까?")) {
+      document.getElementById('boardFrm').setAttribute('action', '/admin/aboard/boards/delete');
+      document.getElementById('boardFrm').submit();
+    }
+  }
+
+  function add_comment(form, post_id) {
+    // Implement AJAX call to add the comment
+    alert('댓글이 등록되었습니다.');
+  }
+
+  function comment_box(cmt_id, mode) {
+    // Open the comment box for editing or replying
+  }
+
+  function delete_comment(cmt_id, post_id) {
+    if (confirm("정말 삭제하시겠습니까?")) {
+      // Implement AJAX call to delete the comment
+      alert('댓글이 삭제되었습니다.');
+    }
+  }
+</script>
