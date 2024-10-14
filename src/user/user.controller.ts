@@ -17,7 +17,7 @@ export class UserController {
     } else if (singlePage.includes(path)) {
       route = path;
     } else {
-      route = 'layout/layout'; // layout.ejs를 기본 레이아웃 파일로 사용
+      route = '_layout/layout'; // layout.ejs를 기본 레이아웃 파일로 사용
     }
     path = `domain/${path}`; // 예: 'domain/home.ejs'
 

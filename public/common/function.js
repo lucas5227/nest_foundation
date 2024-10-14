@@ -17,6 +17,14 @@ function list_deleteOne(req, id) {
   });
 }
 
+function go_submit(action) {
+  if (action === "delete" && confirm("삭제하시겠습니까?")) {
+    document.getElementById('boardFrm').setAttribute('action', '/admin/post/delete');
+    document.getElementById('boardFrm').setAttribute('method', 'post'); // method는 post로 설정
+    document.getElementById('boardFrm').submit();
+  }
+}
+
 // Summernote 초기화
 $(document).ready(function() {
   $('#summernote').summernote({

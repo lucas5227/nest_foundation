@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post, Query, Redirect, Render, Req } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Query, Redirect, Render, Req } from '@nestjs/common';
 import { MemberService } from '../member/member.service';
 import { PostService } from '../post/post.service';
 import { PostEntity } from '../entities/Post';
@@ -57,6 +57,14 @@ export class AdminController {
   ): Promise<number> {
     createPost.post_register_ip = req.ip;
     return this.PostService.createPost(createPost);
+  }
+
+  @Post('/post/delete')
+  @Redirect('/admin/board/brd_key')
+  async deletePost(@Body('post_id') post_id: number) {
+    // post_id를 Body에서 가져옴
+    await this.PostService.deletePost(post_id); // post_id를 사용하여 삭제
+    return true;
   }
 
   @Get('board/:brd_key')

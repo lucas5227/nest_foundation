@@ -51,4 +51,12 @@ export class PostService {
 
     return post;
   }
+
+  async deletePost(post_id: number): Promise<void> {
+    const post = await this.getPost(post_id);
+    if (!post) {
+      throw new Error('Post not found'); // 게시물이 없으면 예외 처리
+    }
+    await this.em.removeAndFlush(post); // 게시물 삭제
+  }
 }
