@@ -28,7 +28,7 @@ function go_submit(action) {
 // Summernote 초기화
 $(document).ready(function() {
   $('#summernote').summernote({
-    placeholder: 'Hello stand alone ui',
+    placeholder: '게시글을 작성하세요.',
     tabsize: 2,
     height: 120,
     toolbar: [
@@ -46,7 +46,6 @@ $(document).ready(function() {
 function saveContent() {
   // 서머노트의 내용을 숨겨진 입력 필드에 복사
   const content = $('#summernote').summernote('code'); // 서머노트의 내용을 가져옴
-  console.log(content);
   $('#post_content').val(content); // 내용을 숨겨진 필드에 저장
   // return true; // 폼 제출을 진행
   return true;

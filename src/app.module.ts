@@ -9,6 +9,7 @@ import { MikroOrmModule } from '@mikro-orm/nestjs';
 import { MemberController } from './member/member.controller';
 import { MemberModule } from './member/member.module';
 import { PostModule } from './post/post.module';
+import { CommonService } from './common/common.service';
 import mikroOrmConfig from './mikro-orm.config'; // MikroORM 설정 파일 경로
 
 // src/app.module.ts
@@ -21,6 +22,7 @@ import mikroOrmConfig from './mikro-orm.config'; // MikroORM 설정 파일 경�
     PostModule,
   ],
   controllers: [AdminController, UserController, MemberController],
+  providers: [CommonService],
   // providers: [MemberService], // 이 줄을 제거합니다.
 })
 export class AppModule {}

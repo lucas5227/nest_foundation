@@ -30,17 +30,24 @@ export class PostEntity {
 
   @Property({
     type: 'datetime',
-    nullable: true,
     defaultRaw: 'CURRENT_TIMESTAMP',
   })
   post_register_datetime?: Date;
 
-  @Property({ type: 'datetime', nullable: true, onUpdate: () => new Date() })
+  @Property({
+    type: 'datetime',
+    defaultRaw: 'CURRENT_TIMESTAMP',
+  })
   post_update_datetime?: Date;
 
   @Property()
   post_register_ip!: string;
 
+  @Property({ type: 'int', default: 0 })
+  post_view!: number;
+
   @Property({ type: 'tinyint', default: 0 })
   post_del!: number;
+  
+  post_display_date: string;
 }

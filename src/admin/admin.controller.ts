@@ -1,8 +1,21 @@
-import { Body, Controller, Delete, Get, Param, Post, Query, Redirect, Render, Req } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Post,
+  Query,
+  Redirect,
+  Render,
+  Req,
+} from '@nestjs/common';
 import { MemberService } from '../member/member.service';
 import { PostService } from '../post/post.service';
 import { PostEntity } from '../entities/Post';
 import { Request } from 'express';
+import { CommonService } from '../common/common.service';
+import * as process from 'node:process';
 
 // TODO: .env 에서 admin 주소 변경가능하게끔 기존 conf 는 env 에 넣는다.
 @Controller('admin')
@@ -10,6 +23,7 @@ export class AdminController {
   constructor(
     private readonly memberService: MemberService,
     private readonly PostService: PostService,
+    private readonly CommonService: CommonService,
   ) {}
 
   @Get('')
@@ -41,22 +55,33 @@ export class AdminController {
 
   @Get('board/write/:brd_key')
   @Render('_admin/_layout/layout') // index.ejs 템플릿을 렌더x`링
-  async postWrite() {
+  async postWrite(@Query('update') post_id: number) {
     // TODO: 비로그인시 admin 접근 로그인
     // TODO: 관리자 아닐때 user 메인으로
-    const post = await this.memberService.getAllMember();
+    let post = null;
+    if (post_id) {
+      post = await this.PostService.getPost(post_id);
+    }
 
-    return { page: 'board/write.ejs', title: 'boardTitle', data: post };
+    return { page: 'board/write.ejs', title: 'boardTitle', post: post };
   }
 
   @Post('/board/write/:brd_key')
   @Redirect('/admin/board/brd_key')
-  async createPost(
-    @Body() createPost: Partial<PostEntity>,
+  async writePost(
+    @Body() writePost: Partial<PostEntity>,
     @Req() req: Request,
   ): Promise<number> {
-    createPost.post_register_ip = req.ip;
-    return this.PostService.createPost(createPost);
+    let result = null;
+    if (writePost.post_id) {
+      result = this.PostService.updatePost(writePost);
+    } else {
+      delete writePost.post_id;
+      writePost.post_register_ip = req.ip;
+      result = this.PostService.createPost(writePost);
+    }
+
+    return result;
   }
 
   @Post('/post/delete')
@@ -74,18 +99,38 @@ export class AdminController {
     @Query('cat_id') cat_id: string,
     @Query('page') page: number,
   ) {
-    // TODO: 비로그인시 admin 접근 로그인
-    // TODO: 관리자 아닐때 user 메인으로
-    const limit = 10; // 페이지당 항목 수
-    const offset = (page - 1) * limit; // 현재 페이지에 따라 offset 계산
-    const list = await this.PostService.getListPost(offset, limit);
+    // TODO: 비로그인 시 admin 접근 로그인 처리
+    // TODO: 관리자가 아닐 경우 user 메인으로 리다이렉트
 
-    return { page: 'board/list.ejs', title: 'boardTitle', data: list };
+    const brd_id = '1'; // brd_key를 사용해서 실제 board 정보를 가져올 수 있음
+    const total = await this.PostService.getListTotal(brd_id); // 총 게시물 수 가져오기
+    const pagenation = this.CommonService.pagenation(total, 10, 10, page); // 페이지네이션 처리
+
+    const list = await this.PostService.getListPost(
+      pagenation.offset,
+      pagenation.limit,
+    );
+
+    // 게시물의 날짜를 형식화하여 `post_display_date` 필드에 추가
+    const posts = list.map((post) => ({
+      ...post,
+      post_display_date: this.CommonService.formattedDatetime(
+        post.post_update_datetime,
+      ),
+    }));
+
+    // 렌더링할 데이터 반환
+    return {
+      page: 'board/list.ejs',
+      title: 'boardTitle',
+      data: posts, // list 대신 posts를 반환
+      paging: pagenation, // 페이지네이션 정보
+    };
   }
 
   @Get('post/:post_id')
   @Render('_admin/_layout/layout')
-  async post( @Param('post_id') post_id: number) {
+  async post(@Param('post_id') post_id: number) {
     // TODO: 비로그인시 admin 접근 로그인
     // TODO: 관리자 아닐때 user 메인으로
     const post = await this.PostService.getPost(post_id);

@@ -34,6 +34,7 @@ export class PostService {
       limit: limit,
       offset: offset,
     });
+    
     return posts;
   }
 
@@ -58,5 +59,37 @@ export class PostService {
       throw new Error('Post not found'); // 게시물이 없으면 예외 처리
     }
     await this.em.removeAndFlush(post); // 게시물 삭제
+  }
+
+  /**
+   * 게시물 업데이트 메서드
+   * @param writePost 업데이트할 게시물의 정보를 포함한 DTO (Partial<PostEntity> 타입)
+   * @returns 업데이트된 게시물의 ID
+   * @throws NotFoundException 게시물이 존재하지 않는 경우
+   */
+  async updatePost(writePost: Partial<PostEntity>): Promise<number> {
+    const post_id = writePost.post_id;
+    if (!post_id) {
+      throw new Error('게시물 ID가 없습니다.');
+    }
+    const existingPost = await this.postRepository.findOne({ post_id });
+    if (!existingPost) {
+      throw new NotFoundException('해당 게시물이 존재하지 않습니다.');
+    }
+    existingPost.post_update_datetime = new Date();
+    this.postRepository.assign(existingPost, writePost);
+    await this.em.flush();
+
+    return existingPost.post_id;
+  }
+
+  /**
+   * 게시물 toal
+   * @param brd_id 보드 id
+   * @returns 모든 게시물 엔티티 배열
+   */
+  async getListTotal(brd_id: string): Promise<number> {
+    const total = await this.postRepository.count({ brd_id });
+    return total;
   }
 }

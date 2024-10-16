@@ -9,7 +9,7 @@ const config: Options<PostgreSqlDriver> = {
   dbName: process.env.DATABASE_NAME,
   user: process.env.DATABASE_USER,
   password: process.env.DATABASE_PASSWORD,
-  host: process.env.DATABASE_HOST || 'localhost', // DATABASE_HOST를 사용
+  host: process.env.DATABASE_HOST || 'localhost',
   debug: true,
   entities: ['./dist/entities'],
   entitiesTs: ['./src/entities'],
