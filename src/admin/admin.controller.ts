@@ -44,6 +44,17 @@ export class AdminController {
     return { page: 'member/list.ejs', title: '회원관리', members: allMember };
   }
 
+  @Get('layout/sitemap')
+  @Render('_admin/_layout/layout') // index.ejs 템플릿을 렌더링
+  async siteMap() {
+    const data = '';
+    return {
+      page: 'layout/sitemapList.ejs',
+      title: '사이트맵 설정',
+      data: data,
+    };
+  }
+
   @Get('member/:id')
   @Render('_admin/_layout/layout') // index.ejs 템플릿을 렌더링
   async memberView(@Param('id') mem_id: number) {
