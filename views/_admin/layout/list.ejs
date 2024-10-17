@@ -1,18 +1,22 @@
 <!-- Container -->
 <div class="container-fluid px-4">
     <h1 class="mt-4"><%= title ;%></h1>
-    <!-- Table Sections -->
+
+    <!-- Menu Sections -->
     <div class="row mt-5">
-        <!-- 1차메뉴 -->
+        <!-- First Menu -->
         <div class="col-md-4">
             <div class="d-flex justify-content-between align-items-center mb-3">
                 <h5 class="mb-0">1차메뉴</h5>
-                <button class="btn btn-success btn-sm">추가</button>
+                <div>
+                    <button class="btn btn-success btn-sm" id="addDepth1">추가</button>
+                    <button class="btn btn-danger btn-sm">삭제</button>
+                </div>
             </div>
             <table class="table table-bordered">
                 <thead>
                 <tr>
-                    <th><input type="checkbox"></th>
+                    <th><input type="checkbox" id="chkAll"></th>
                     <th>메뉴코드</th>
                     <th>메뉴명</th>
                     <th>종류</th>
@@ -50,16 +54,19 @@
             </table>
         </div>
 
-        <!-- 2차메뉴 -->
+        <!-- Second Menu -->
         <div class="col-md-4">
             <div class="d-flex justify-content-between align-items-center mb-3">
                 <h5 class="mb-0">2차메뉴</h5>
-                <button class="btn btn-success btn-sm">추가</button>
+                <div>
+                    <button class="btn btn-success btn-sm">추가</button>
+                    <button class="btn btn-danger btn-sm">삭제</button>
+                </div>
             </div>
             <table class="table table-bordered">
                 <thead>
                 <tr>
-                    <th><input type="checkbox"></th>
+                    <th><input type="checkbox" id="chkAll"></th>
                     <th>메뉴코드</th>
                     <th>메뉴명</th>
                     <th>종류</th>
@@ -97,16 +104,19 @@
             </table>
         </div>
 
-        <!-- 3차메뉴 -->
+        <!-- Third Menu -->
         <div class="col-md-4">
             <div class="d-flex justify-content-between align-items-center mb-3">
                 <h5 class="mb-0">3차메뉴</h5>
-                <button class="btn btn-success btn-sm">추가</button>
+                <div>
+                    <button class="btn btn-success btn-sm">추가</button>
+                    <button class="btn btn-danger btn-sm">삭제</button>
+                </div>
             </div>
             <table class="table table-bordered">
                 <thead>
                 <tr>
-                    <th><input type="checkbox"></th>
+                    <th><input type="checkbox" id="chkAll"></th>
                     <th>메뉴코드</th>
                     <th>메뉴명</th>
                     <th>종류</th>
@@ -127,4 +137,6 @@
         <button class="btn btn-primary">저장하기</button>
     </div>
 </div>
+
+<!-- External JS -->
 <script src="/admin/js/sitemap.js"></script>
