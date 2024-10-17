@@ -1,7 +1,6 @@
 import {
   Body,
   Controller,
-  Delete,
   Get,
   Param,
   Post,
@@ -15,7 +14,7 @@ import { PostService } from '../post/post.service';
 import { PostEntity } from '../entities/Post';
 import { Request } from 'express';
 import { CommonService } from '../common/common.service';
-import * as process from 'node:process';
+import { MenuService } from '../menu/menu.service';
 
 // TODO: .env 에서 admin 주소 변경가능하게끔 기존 conf 는 env 에 넣는다.
 @Controller('admin')
@@ -24,6 +23,7 @@ export class AdminController {
     private readonly memberService: MemberService,
     private readonly PostService: PostService,
     private readonly CommonService: CommonService,
+    private readonly MenuService: MenuService,
   ) {}
 
   @Get('')
@@ -69,6 +69,13 @@ export class AdminController {
       title: title,
       data: data,
     };
+  }
+
+  @Post('layout/sitemap/write/:parent')
+  @Redirect('/admin/layout/sitemap')
+  async menuWritePost(@Param('parent') parent, @Body() menuWrite){
+    const men_id = await this.MenuService.writeMenu(parent, menuWrite);
+   return men_id;
   }
 
   @Get('member/:id')

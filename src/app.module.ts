@@ -10,6 +10,8 @@ import { MemberController } from './member/member.controller';
 import { MemberModule } from './member/member.module';
 import { PostModule } from './post/post.module';
 import { CommonService } from './common/common.service';
+import { MenuService } from './menu/menu.service';
+import { MenuModule } from './menu/menu.module';
 import mikroOrmConfig from './mikro-orm.config'; // MikroORM 설정 파일 경로
 
 // src/app.module.ts
@@ -20,6 +22,7 @@ import mikroOrmConfig from './mikro-orm.config'; // MikroORM 설정 파일 경�
     UserModule,
     MemberModule,
     PostModule,
+    MenuModule,
   ],
   controllers: [AdminController, UserController, MemberController],
   providers: [CommonService],

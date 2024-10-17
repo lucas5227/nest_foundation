@@ -6,10 +6,12 @@ import { MemberService } from '../member/member.service';
 import { MemberEntity } from '../entities/member.entity';
 import { PostEntity } from '../entities/Post';
 import { PostService } from '../post/post.service';
+import { MenuService } from '../menu/menu.service';
+import { MenuEntity } from '../entities/Menu';
 
 @Module({
-  imports: [MikroOrmModule.forFeature([MemberEntity, PostEntity])],
+  imports: [MikroOrmModule.forFeature([MemberEntity, PostEntity, MenuEntity])],
   controllers: [AdminController],
-  providers: [MemberService, PostService, CommonService],
+  providers: [MemberService, PostService, CommonService, MenuService],
 })
 export class AdminModule {}
