@@ -47,7 +47,7 @@ export class AdminController {
   @Get('layout/sitemap')
   @Render('_admin/_layout/layout') // index.ejs 템플릿을 렌더링
   async siteMap() {
-    const data = '';
+    const data = await this.MenuService.getMenu();
     return {
       page: 'layout/list.ejs',
       title: '사이트맵 설정',

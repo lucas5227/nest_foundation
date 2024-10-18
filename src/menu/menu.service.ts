@@ -10,15 +10,13 @@ export class MenuService {
   constructor(
     @InjectRepository(MenuEntity)
     private readonly menuRepository: EntityRepository<MenuEntity>,
-
     @InjectRepository(PageEntity) // PageEntity 주입
     private readonly pageRepository: EntityRepository<PageEntity>,
-
     @InjectRepository(BoardEntity) // BoardEntity 주입
     private readonly boardRepository: EntityRepository<BoardEntity>,
-
     private readonly em: EntityManager, // EntityManager 주입
-  ) {}
+  ) {
+  }
 
   async writeMenu(parent, menuWriteDto: Partial<MenuEntity>) {
     let men_id;
@@ -55,4 +53,46 @@ export class MenuService {
 
     return men_id;
   }
+
+  async getMenu() {
+    const menus = await this.menuRepository.findAll();
+    const menuTree = [];
+
+    // 첫 번째 단계: 부모 메뉴 추가
+    menus.forEach((menu) => {
+      if (Number(menu.men_parent) === 0) {
+        menuTree.push({ ...menu, children: [] }); // children 속성을 추가
+      }
+    });
+
+    // 두 번째 단계: 자식 메뉴 추가
+    menus.forEach((menu) => {
+      if (Number(menu.men_parent) !== 0) {
+        menuTree.forEach((parentMenu) => {
+          if (Number(parentMenu.men_id) === Number(menu.men_parent)) {
+            // menu 객체를 복사하고 children 속성 추가
+            const childMenu = { ...menu, children: [] };
+            parentMenu.children.push(childMenu);
+          }
+        });
+      }
+    });
+    // 세 번째 단계: 손자 메뉴 추가
+    menus.forEach((menu) => {
+      if (Number(menu.men_parent) !== 0) {
+        menuTree.forEach((parentMenu) => {
+          parentMenu.children.forEach((childMenu) => {
+            if (Number(childMenu.men_id) === Number(menu.men_parent)) {
+              childMenu.children.push(menu);
+            }
+          });
+        });
+      }
+    });
+
+    console.log(JSON.stringify(menuTree, null, 2));
+
+    return menuTree;
+  }
+
 }
