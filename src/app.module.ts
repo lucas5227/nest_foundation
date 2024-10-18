@@ -12,7 +12,9 @@ import { PostModule } from './post/post.module';
 import { CommonService } from './common/common.service';
 import { MenuService } from './menu/menu.service';
 import { MenuModule } from './menu/menu.module';
-import mikroOrmConfig from './mikro-orm.config'; // MikroORM 설정 파일 경로
+import { PageModule } from './page/page.module';
+import mikroOrmConfig from './mikro-orm.config';
+import { BoardModule } from './board/board.module'; // MikroORM 설정 파일 경로
 
 // src/app.module.ts
 @Module({
@@ -23,6 +25,8 @@ import mikroOrmConfig from './mikro-orm.config'; // MikroORM 설정 파일 경�
     MemberModule,
     PostModule,
     MenuModule,
+    PageModule,
+    BoardModule,
   ],
   controllers: [AdminController, UserController, MemberController],
   providers: [CommonService],

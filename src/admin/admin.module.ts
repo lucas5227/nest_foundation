@@ -8,9 +8,19 @@ import { PostEntity } from '../entities/Post';
 import { PostService } from '../post/post.service';
 import { MenuService } from '../menu/menu.service';
 import { MenuEntity } from '../entities/Menu';
+import { PageEntity } from '../entities/Page';
+import { BoardEntity } from '../entities/Board';
 
 @Module({
-  imports: [MikroOrmModule.forFeature([MemberEntity, PostEntity, MenuEntity])],
+  imports: [
+    MikroOrmModule.forFeature([
+      MemberEntity,
+      PostEntity,
+      MenuEntity,
+      PageEntity,
+      BoardEntity,
+    ]),
+  ],
   controllers: [AdminController],
   providers: [MemberService, PostService, CommonService, MenuService],
 })

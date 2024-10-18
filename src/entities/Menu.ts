@@ -17,4 +17,13 @@ export class MenuEntity {
 
   @Property({ length: 255, nullable: true })
   men_link?: string;
+
+  @Property({ type: 'tinyint', default: 0 })
+  men_link_window_open!: number;
+
+  men_type!: string;
+
+  brd_skin?: string;
+
+  page_content?: string;
 }
