@@ -15,8 +15,7 @@ export class MenuService {
     @InjectRepository(BoardEntity) // BoardEntity 주입
     private readonly boardRepository: EntityRepository<BoardEntity>,
     private readonly em: EntityManager, // EntityManager 주입
-  ) {
-  }
+  ) {}
 
   async writeMenu(parent, menuWriteDto: Partial<MenuEntity>) {
     let men_id;
@@ -53,46 +52,38 @@ export class MenuService {
 
     return men_id;
   }
-
   async getMenu() {
     const menus = await this.menuRepository.findAll();
     const menuTree = [];
 
-    // 첫 번째 단계: 부모 메뉴 추가
+    // Step 1: Add parent menus
     menus.forEach((menu) => {
       if (Number(menu.men_parent) === 0) {
-        menuTree.push({ ...menu, children: [] }); // children 속성을 추가
+        menuTree[menu.men_id] = { ...menu, children: [] }; // 부모 메뉴에 children 속성을 추가
+
       }
     });
 
-    // 두 번째 단계: 자식 메뉴 추가
+    // // Step 2: Add child menus
     menus.forEach((menu) => {
       if (Number(menu.men_parent) !== 0) {
-        menuTree.forEach((parentMenu) => {
-          if (Number(parentMenu.men_id) === Number(menu.men_parent)) {
-            // menu 객체를 복사하고 children 속성 추가
-            const childMenu = { ...menu, children: [] };
-            parentMenu.children.push(childMenu);
+        const parentMenu = menuTree[menu.men_parent];
+        if (parentMenu) {
+          const childMenu = { ...menu, children: [] };
+          parentMenu.children[menu.men_id] = childMenu; // 자식 메뉴를 부모의 children 배열에 추가
+        }
+      }
+    });
+    // Step 3: Add grandchild menus to the child menus
+    menus.forEach((menu) => {
+      if (Number(menu.men_parent) !== 0) {
+        menuTree.forEach((mt) => {
+          if (mt.children[menu.men_parent]) {
+            mt.children[menu.men_parent].children[menu.men_id] = menu;
           }
         });
       }
     });
-    // 세 번째 단계: 손자 메뉴 추가
-    menus.forEach((menu) => {
-      if (Number(menu.men_parent) !== 0) {
-        menuTree.forEach((parentMenu) => {
-          parentMenu.children.forEach((childMenu) => {
-            if (Number(childMenu.men_id) === Number(menu.men_parent)) {
-              childMenu.children.push(menu);
-            }
-          });
-        });
-      }
-    });
-
-    console.log(JSON.stringify(menuTree, null, 2));
-
     return menuTree;
   }
-
 }

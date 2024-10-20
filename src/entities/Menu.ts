@@ -10,6 +10,12 @@ export class MenuEntity {
   men_parent!: string;
 
   @Property({ length: 255 })
+  men_type!: string;
+
+  @Property({ length: 255 })
+  men_code!: string;
+
+  @Property({ length: 255 })
   men_title!: string;
 
   @Property({ type: 'tinyint', default: 1 })
@@ -20,8 +26,6 @@ export class MenuEntity {
 
   @Property({ type: 'tinyint', default: 0 })
   men_link_window_open!: number;
-
-  men_type!: string;
 
   brd_skin?: string;
 

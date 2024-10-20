@@ -27,7 +27,7 @@ export class AdminController {
   ) {}
 
   @Get('')
-  @Render('_admin/_layout/layout') // index.ejs 템플릿을 렌더링
+  @Render('admin/_layout/layout') // index.ejs 템플릿을 렌더링
   async main() {
     // TODO: 비로그인시 admin 접근 로그인
     // TODO: 관리자 아닐때 user 메인으로
@@ -35,7 +35,7 @@ export class AdminController {
   }
 
   @Get('memberList')
-  @Render('_admin/_layout/layout') // index.ejs 템플릿을 렌더링
+  @Render('admin/_layout/layout') // index.ejs 템플릿을 렌더링
   async memberList() {
     // TODO: 비로그인시 admin 접근 로그인
     // TODO: 관리자 아닐때 user 메인으로
@@ -45,17 +45,17 @@ export class AdminController {
   }
 
   @Get('layout/sitemap')
-  @Render('_admin/_layout/layout') // index.ejs 템플릿을 렌더링
+  @Render('admin/_layout/layout') // index.ejs 템플릿을 렌더링
   async siteMap() {
-    const data = await this.MenuService.getMenu();
+    const menuTree = await this.MenuService.getMenu();
     return {
       page: 'layout/list.ejs',
       title: '사이트맵 설정',
-      data: data,
+      data: menuTree,
     };
   }
   @Get('layout/sitemap/write/:depth')
-  @Render('_admin/_layout/layout') // index.ejs 템플릿을 렌더링
+  @Render('admin/_layout/layout') // index.ejs 템플릿을 렌더링
   async menuWrite(@Param('depth') depth, @Query('update') men_id) {
     let menu = null;
     let title = '사이트맵 등록';
@@ -79,7 +79,7 @@ export class AdminController {
   }
 
   @Get('member/:id')
-  @Render('_admin/_layout/layout') // index.ejs 템플릿을 렌더링
+  @Render('admin/_layout/layout') // index.ejs 템플릿을 렌더링
   async memberView(@Param('id') mem_id: number) {
     // TODO: 비로그인시 admin 접근 로그인
     // TODO: 관리자 아닐때 user 메인으로
@@ -88,7 +88,7 @@ export class AdminController {
   }
 
   @Get('board/write/:brd_key')
-  @Render('_admin/_layout/layout') // index.ejs 템플릿을 렌더x`링
+  @Render('admin/_layout/layout') // index.ejs 템플릿을 렌더x`링
   async postWrite(@Query('update') post_id: number) {
     // TODO: 비로그인시 admin 접근 로그인
     // TODO: 관리자 아닐때 user 메인으로
@@ -127,7 +127,7 @@ export class AdminController {
   }
 
   @Get('board/:brd_key')
-  @Render('_admin/_layout/layout')
+  @Render('admin/_layout/layout')
   async list(
     @Param('brd_key') brd_key: string,
     @Query('cat_id') cat_id: string,
@@ -163,7 +163,7 @@ export class AdminController {
   }
 
   @Get('post/:post_id')
-  @Render('_admin/_layout/layout')
+  @Render('admin/_layout/layout')
   async post(@Param('post_id') post_id: number) {
     // TODO: 비로그인시 admin 접근 로그인
     // TODO: 관리자 아닐때 user 메인으로
