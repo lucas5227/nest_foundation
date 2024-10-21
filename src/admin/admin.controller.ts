@@ -54,28 +54,30 @@ export class AdminController {
       data: menuTree,
     };
   }
-  @Get('layout/sitemap/write/:depth')
+
+  @Get('layout/sitemap/write/:parent')
   @Render('admin/_layout/layout') // index.ejs 템플릿을 렌더링
-  async menuWrite(@Param('depth') depth, @Query('update') men_id) {
-    let menu = null;
+  async menuWrite(@Param('parent') parent, @Query('update') men_id) {
+    let menu = {
+      men_parent: parent,
+    };
     let title = '사이트맵 등록';
     if (men_id) {
-      // menu = await this.PostService.getPost(post_id);
+      menu = await this.MenuService.getOneMenu(men_id);
       title = '사이트맵 수정';
     }
-    const data = '';
     return {
       page: 'layout/write.ejs',
       title: title,
-      data: data,
+      data: menu,
     };
   }
 
   @Post('layout/sitemap/write/:parent')
   @Redirect('/admin/layout/sitemap')
-  async menuWritePost(@Param('parent') parent, @Body() menuWrite){
+  async menuSave(@Param('parent') parent, @Body() menuWrite) {
     const men_id = await this.MenuService.writeMenu(parent, menuWrite);
-   return men_id;
+    return men_id;
   }
 
   @Get('member/:id')

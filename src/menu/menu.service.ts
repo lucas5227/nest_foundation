@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@mikro-orm/nestjs';
 import { EntityManager, EntityRepository } from '@mikro-orm/core';
 import { MenuEntity } from '../entities/Menu';
@@ -47,24 +47,74 @@ export class MenuService {
           break;
       }
     } else {
-      men_id = 0;
+      men_id = menuWriteDto.men_id;
+      if (!men_id) {
+        throw new Error('메뉴 ID가 없습니다.');
+      }
+      const existingMenu = await this.menuRepository.findOne({ men_id });
+      if (!existingMenu) {
+        throw new NotFoundException('해당 메뉴가 존재하지 않습니다.');
+      }
+      this.menuRepository.assign(existingMenu, menuWriteDto);
+      await this.em.flush();
+
+      switch (menuWriteDto.men_type) {
+        case 'page':
+          const existingPage = await this.pageRepository.findOne({ men_id });
+          if (existingPage) {
+            this.pageRepository.assign(existingPage, {
+              page_title: menuWriteDto.men_title,
+              page_content: menuWriteDto.page_content,
+            });
+            await this.em.flush();
+          } else {
+            const newPageWriteDto: Partial<PageEntity> = {
+              men_id: men_id,
+              page_title: menuWriteDto.men_title,
+              page_content: menuWriteDto.page_content,
+            };
+            const newPage = this.pageRepository.create(newPageWriteDto);
+            await this.em.persistAndFlush(newPage);
+          }
+          break;
+
+        case 'board':
+          const existingBoard = await this.boardRepository.findOne({ men_id });
+          if (existingBoard) {
+            this.boardRepository.assign(existingBoard, {
+              brd_title: menuWriteDto.men_title,
+              brd_skin: menuWriteDto.brd_skin,
+            });
+            await this.em.flush();
+          } else {
+            const newBoardWriteDto: Partial<BoardEntity> = {
+              men_id: men_id,
+              brd_title: menuWriteDto.men_title,
+              brd_skin: menuWriteDto.brd_skin,
+            };
+            const newBoard = this.boardRepository.create(newBoardWriteDto);
+            await this.em.persistAndFlush(newBoard);
+          }
+          break;
+      }
+
+      men_id = existingMenu.men_id;
     }
 
     return men_id;
   }
+
+
   async getMenu() {
     const menus = await this.menuRepository.findAll();
     const menuTree = [];
 
-    // Step 1: Add parent menus
     menus.forEach((menu) => {
       if (Number(menu.men_parent) === 0) {
         menuTree[menu.men_id] = { ...menu, children: [] }; // 부모 메뉴에 children 속성을 추가
-
       }
     });
 
-    // // Step 2: Add child menus
     menus.forEach((menu) => {
       if (Number(menu.men_parent) !== 0) {
         const parentMenu = menuTree[menu.men_parent];
@@ -74,7 +124,7 @@ export class MenuService {
         }
       }
     });
-    // Step 3: Add grandchild menus to the child menus
+
     menus.forEach((menu) => {
       if (Number(menu.men_parent) !== 0) {
         menuTree.forEach((mt) => {
@@ -84,6 +134,32 @@ export class MenuService {
         });
       }
     });
+
     return menuTree;
+  }
+
+  async getOneMenu(men_id: number) {
+    const menu = await this.menuRepository.findOne({ men_id });
+    if (!menu) {
+      throw new NotFoundException(`Post with id ${men_id} not found`); // 템플릿 리터럴로 수정
+    }
+    if (menu.men_type === 'page') {
+      const page = await this.pageRepository.findOne({ men_id });
+      if (page) {
+        menu.page_content = page.page_content;
+      } else {
+        console.log(`Page with men_id ${men_id} not found.`);
+      }
+    }
+    if (menu.men_type === 'board') {
+      const board = await this.boardRepository.findOne({ men_id });
+      if (board) {
+        menu.brd_skin = board.brd_skin;
+      } else {
+        console.log(`Page with men_id ${men_id} not found.`);
+      }
+    }
+
+    return menu;
   }
 }

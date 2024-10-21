@@ -1,5 +1,14 @@
 /* eslint-disable */
 hideAll();
+
+switch ($('#men_type').val()) {
+  case 'page':
+    $('#page_content').show();
+    $('#preview_button').show();
+    break;
+  case 'link':  $('#link_address').show();  break;
+  case 'board': $('#board_skin').show();  break;
+}
 function hideAll() {
   $('#page_content').hide();
   $('#link_address').hide();

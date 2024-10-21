@@ -1,7 +1,7 @@
 // src/member/member.module.ts
 import { Module } from '@nestjs/common';
 import { MikroOrmModule } from '@mikro-orm/nestjs';
-import { MemberEntity } from '../entities/member.entity';
+import { MemberEntity } from '../entities/Member';
 import { MemberService } from './member.service';
 import { MemberController } from './member.controller';
 

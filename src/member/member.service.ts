@@ -1,7 +1,7 @@
 // src/member/member.service.ts
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@mikro-orm/nestjs';
-import { MemberEntity } from '../entities/member.entity';
+import { MemberEntity } from '../entities/Member';
 import { EntityManager, EntityRepository } from '@mikro-orm/core';
 
 @Injectable()

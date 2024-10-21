@@ -3,7 +3,7 @@ import { MikroOrmModule } from '@mikro-orm/nestjs';
 import { CommonService } from '../common/common.service';
 import { AdminController } from './admin.controller';
 import { MemberService } from '../member/member.service';
-import { MemberEntity } from '../entities/member.entity';
+import { MemberEntity } from '../entities/Member';
 import { PostEntity } from '../entities/Post';
 import { PostService } from '../post/post.service';
 import { MenuService } from '../menu/menu.service';
