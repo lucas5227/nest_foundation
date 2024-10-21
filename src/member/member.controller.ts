@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Param, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Param, Post, Req } from '@nestjs/common';
 import { MemberEntity } from '../entities/Member';
 import { MemberService } from './member.service';
 
@@ -13,8 +13,8 @@ export class MemberController {
     return this.memberService.registerMember(createMemberDto);
   }
 
-  @Delete('/member/delete/:id')
-  async deleteMember(@Param('id') mem_id: number) {
-    return this.memberService.deleteMember(mem_id);
+  @Delete('layout/sitemap/delete')
+  async deleteMenu(@Req() req: Request) { // Import the Request from 'express'
+    console.log('Received request:', req.body); // Log the raw body of the request
   }
 }

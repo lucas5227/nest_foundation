@@ -9,33 +9,6 @@ $(document).ready(function () {
     });
   });
 
-  // 1차, 2차, 3차 메뉴에 추가 버튼 동작
-  // $('.btn-success').click(function () {
-  //   const parent = $(this).closest('div.col-md-4').find('tbody');
-  //   const newRow = `
-  //       <tr>
-  //           <td><input type="checkbox"></td>
-  //           <td>newCode</td>
-  //           <td>새 메뉴</td>
-  //           <td>자동연결</td>
-  //           <td>
-  //               <div class="btn-group" role="group">
-  //                   <button class="btn btn-secondary btn-sm">▲</button>
-  //                   <button class="btn btn-secondary btn-sm">▼</button>
-  //                   <button class="btn btn-primary btn-sm">수정</button>
-  //               </div>
-  //           </td>
-  //       </tr>`;
-  //   parent.append(newRow);
-  // });
-  //
-  // // 수정 버튼 클릭 시 동작 (예시: alert로 대체)
-  // $(document).on('click', '.btn-primary', function () {
-  //   const menuName = $(this).closest('tr').find('td:eq(2)').text();
-  //   alert(menuName + ' 메뉴를 수정합니다.');
-  //   // 실제로는 수정 모달 창을 띄우는 방식으로 구현 가능
-  // });
-
   // ▲ 버튼 클릭 시 위로 이동
   $(document).on('click', '.btn-secondary:contains("▲")', function () {
     const row = $(this).closest('tr');
@@ -68,7 +41,7 @@ $(document).ready(function () {
 
   $('#addDepth1, #addDepth2, #addDepth3').click(function () {
     let parent = $(this).data('parent');
-    if(parent == undefined){
+    if (parent == undefined) {
       alert('상위 메뉴를 선택하세요.');
       return;
     }
@@ -94,7 +67,7 @@ $(document).ready(function () {
       children.forEach((child) => {
         if (child) {
           html += `<tr class="depth-${targetDepth}" data-depth="${targetDepth}" data-men_id="${child.men_id}">
-                  <td><input type="checkbox"></td>
+                  <td><input type="checkbox" name="chk[]" value="${child.men_id}"></td>
                   <td>${child.men_code}</td>
                   <td>${child.men_title}</td>
                   <td>${child.men_type}</td>
@@ -108,7 +81,7 @@ $(document).ready(function () {
               </tr>`;
         }
       });
-      if(html == '') {
+      if (html == '') {
         html = `<tr>
                     <td colspan="5" class="text-center">하위 메뉴 없음</td>
                 </tr>`;
@@ -119,9 +92,38 @@ $(document).ready(function () {
   });
 });
 
-$(document).on('click', '[data-update]', function() {
+$(document).on('click', '[data-update]', function () {
   let depth = $(this).parents('tr').data('depth');
   let parent = $(`#addDepth${depth}`).data('parent');
   let men_id = $(this).data('update');
   location.href = `/admin/layout/sitemap/write/${parent}?update=${men_id}`;
+});
+
+$('#delDepth1, #delDepth2, #delDepth3').click(function () {
+  const men_ids = [];
+  $(this)
+    .parents('.depth')
+    .find('input[name="chk[]"]:checked')
+    .each(function () {
+      men_ids.push($(this).val());
+    });
+
+  if (confirm('메뉴를 삭제하시겠습니까?')) {
+    $.ajax({
+      type: 'DELETE',
+      url: '/admin/layout/sitemap/delete',
+      data: JSON.stringify({ men_ids: men_ids }), // Serialize data as JSON
+      contentType: 'application/json', // Ensure content-type is set to JSON
+      async: true,
+      success: function (data, status) {
+        console.log(data, status);
+        alert('Deleted successfully');
+        window.location.reload();
+      },
+      error: function (xhr, status, error) {
+        console.error('Error:', error);
+        alert('An error occurred while deleting the menu.');
+      },
+    });
+  }
 });

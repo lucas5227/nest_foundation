@@ -1,6 +1,6 @@
 import {
   Body,
-  Controller,
+  Controller, Delete,
   Get,
   Param,
   Post,
@@ -78,6 +78,12 @@ export class AdminController {
   async menuSave(@Param('parent') parent, @Body() menuWrite) {
     const men_id = await this.MenuService.writeMenu(parent, menuWrite);
     return men_id;
+  }
+
+  @Delete('layout/sitemap/delete')
+  async deleteMenu(@Body('men_ids') men_ids) {
+    console.log(men_ids);
+    // return this.memberService.deleteMember(mem_id);
   }
 
   @Get('member/:id')
