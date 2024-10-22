@@ -1,0 +1,143 @@
+<div class="container mt-4">
+    <div class="content">
+        <ul class="nav nav-tabs">
+            <li class="nav-item">
+                <a class="nav-link active" href="http://nosboard.kr/admin/config/layoutskin/metatag">메타태그</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="http://nosboard.kr/admin/config/layoutskin/favicon">파비콘 & OG 이미지</a>
+            </li>
+        </ul>
+
+        <div class="top_help alert alert-info mt-3">
+            <p><strong>Notice</strong></p>
+            <ul class="list-unstyled">
+                <li>각 페이지의 Title 과 Meta Tag 를 관리하는 페이지입니다.</li>
+            </ul>
+        </div>
+
+        <div class="top_help alert alert-warning mt-3">
+            <ul class="list-unstyled">
+                <li><b>meta description : </b> &lt;meta name="description" content="여기에 입력하신 내용이 들어갑니다"&gt;</li>
+                <li><b>meta keywords : </b> &lt;meta name="keywords" content="여기에 입력하신 내용이 들어갑니다"&gt;</li>
+                <li><b>meta author : </b> &lt;meta name="author" content="여기에 입력하신 내용이 들어갑니다"&gt;</li>
+            </ul>
+        </div>
+
+        <form action="/admin/layout/head" name="" id="" method="post">
+            <div class="box_wrap">
+                <table class="table table-bordered admin_table mt-3">
+                    <thead>
+                    <tr>
+                        <th>위치</th>
+                        <th>내용</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <th>기본설정</th>
+                        <td>
+                            <table class="table table-bordered inner_table">
+                                <tbody>
+                                <tr>
+                                    <th>Title</th>
+                                    <td>
+                                        <input type="text" name="site_meta_title_default" class="form-control"
+                                               value="<%=data.site_meta_title_default%>">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>meta description</th>
+                                    <td>
+                                        <input type="text" name="site_meta_description_default" class="form-control"
+                                               value="<%=data.site_meta_description_default%>">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>meta keywords</th>
+                                    <td>
+                                        <input type="text" name="site_meta_keywords_default" class="form-control"
+                                               value="<%=data.site_meta_keywords_default%>">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>meta author</th>
+                                    <td>
+                                        <input type="text" name="site_meta_author_default" class="form-control"
+                                               value="<%=data.site_meta_author_default%>">
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <th>OG</th>
+                        <td>
+                            <table class="table table-bordered inner_table">
+                                <tbody>
+                                <tr>
+                                    <th>Title</th>
+                                    <td>
+                                        <input type="text" name="og_title" class="form-control" value="<%=data.og_title%>">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>Image</th>
+                                    <td>
+                                        <!-- Dropzone for OG Image -->
+                                        <div class="dropzone" id="ogImageDropzone"></div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>Description</th>
+                                    <td>
+                                        <input type="text" name="og_description" class="form-control" value="<%=data.og_description%>">
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>파비콘</th>
+                        <td>
+                            <!-- Dropzone for Favicon -->
+                            <div class="dropzone" id="faviconDropzone"></div>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="btn_wrap d-flex justify-content-end">
+                <button type="submit" class="btn btn-primary">저장하기</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+  Dropzone.options.ogImageDropzone = {
+    url: '/upload/og-image',
+    maxFilesize: 2, // MB
+    acceptedFiles: 'image/*',
+    dictDefaultMessage: 'OG 이미지를 여기에 드롭하거나 클릭하여 업로드하세요',
+    paramName: 'og_image',
+    maxFiles: 1
+  };
+
+  // Dropzone configuration for Favicon
+  Dropzone.options.faviconDropzone = {
+    url: '/upload/favicon',
+    maxFilesize: 1, // MB
+    acceptedFiles: '.ico,.png',
+    dictDefaultMessage: '파비콘 파일을 여기에 드롭하거나 클릭하여 업로드하세요',
+    paramName: 'favicon',
+    maxFiles: 1
+  };
+  <% if(updated){ %>
+  alert('저장되었습니다.');
+  <% } %>
+
+</script>

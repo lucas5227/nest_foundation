@@ -1,6 +1,7 @@
 import {
   Body,
-  Controller, Delete,
+  Controller,
+  Delete,
   Get,
   Param,
   Post,
@@ -15,6 +16,7 @@ import { PostEntity } from '../entities/Post';
 import { Request } from 'express';
 import { CommonService } from '../common/common.service';
 import { MenuService } from '../menu/menu.service';
+import { ConfigService } from '../config/config.service';
 
 // TODO: .env 에서 admin 주소 변경가능하게끔 기존 conf 는 env 에 넣는다.
 @Controller('admin')
@@ -24,6 +26,7 @@ export class AdminController {
     private readonly PostService: PostService,
     private readonly CommonService: CommonService,
     private readonly MenuService: MenuService,
+    private readonly ConfigService: ConfigService,
   ) {}
 
   @Get('')
@@ -44,8 +47,34 @@ export class AdminController {
     return { page: 'member/list.ejs', title: '회원관리', members: allMember };
   }
 
-  @Get('layout/sitemap')
+  @Get('layout/head')
   @Render('admin/_layout/layout') // index.ejs 템플릿을 렌더링
+  async head(@Query('update') update) {
+    const conf_keys = [
+      'site_meta_title_default',
+      'site_meta_description_default',
+      'site_meta_keywords_default',
+      'site_meta_author_default',
+      'og_title',
+      'og_description',
+    ];
+    const head = await this.ConfigService.getConfig(conf_keys);
+    return {
+      page: 'layout/head.ejs',
+      title: '&lt;head&gt; 설정',
+      data: head,
+      updated: update ? true : false,
+    };
+  }
+
+  @Post('layout/head')
+  @Redirect('/admin/layout/head?update=true')
+  async headWrite(@Body() cofigData) {
+    return await this.ConfigService.saveConfig(cofigData);
+  }
+
+  @Get('layout/sitemap')
+  @Render('admin/_layout/layout')
   async siteMap() {
     const menuTree = await this.MenuService.getMenu();
     return {

@@ -1,20 +1,25 @@
 //src/app.module.ts
 import { Module } from '@nestjs/common';
+import { MikroOrmModule } from '@mikro-orm/nestjs';
+import mikroOrmConfig from './mikro-orm.config';
+
 import { UserModule } from './user/user.module';
 import { UserController } from './user/user.controller';
+
 import { AdminModule } from './admin/admin.module';
 import { AdminController } from './admin/admin.controller';
 
-import { MikroOrmModule } from '@mikro-orm/nestjs';
 import { MemberController } from './member/member.controller';
 import { MemberModule } from './member/member.module';
-import { PostModule } from './post/post.module';
+
 import { CommonService } from './common/common.service';
-import { MenuService } from './menu/menu.service';
+
+import { ConfigModule } from './config/config.module';
+
 import { MenuModule } from './menu/menu.module';
+import { PostModule } from './post/post.module';
 import { PageModule } from './page/page.module';
-import mikroOrmConfig from './mikro-orm.config';
-import { BoardModule } from './board/board.module'; // MikroORM 설정 파일 경로
+import { BoardModule } from './board/board.module';
 
 // src/app.module.ts
 @Module({
@@ -27,6 +32,7 @@ import { BoardModule } from './board/board.module'; // MikroORM 설정 파일 �
     MenuModule,
     PageModule,
     BoardModule,
+    ConfigModule,
   ],
   controllers: [AdminController, UserController, MemberController],
   providers: [CommonService],

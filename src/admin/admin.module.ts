@@ -10,6 +10,8 @@ import { MenuService } from '../menu/menu.service';
 import { MenuEntity } from '../entities/Menu';
 import { PageEntity } from '../entities/Page';
 import { BoardEntity } from '../entities/Board';
+import { ConfigService } from '../config/config.service';
+import { ConfigEntity } from '../entities/Config';
 
 @Module({
   imports: [
@@ -19,9 +21,10 @@ import { BoardEntity } from '../entities/Board';
       MenuEntity,
       PageEntity,
       BoardEntity,
+      ConfigEntity,
     ]),
   ],
   controllers: [AdminController],
-  providers: [MemberService, PostService, CommonService, MenuService],
+  providers: [MemberService, PostService, CommonService, MenuService, ConfigService],
 })
 export class AdminModule {}
