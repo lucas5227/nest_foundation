@@ -19,7 +19,8 @@ export class MenuService {
 
   async writeMenu(parent, menuWriteDto: Partial<MenuEntity>) {
     let men_id;
-    if (menuWriteDto.men_id === undefined) {
+    if (!menuWriteDto.men_id) {
+      delete menuWriteDto.men_id;
       menuWriteDto.men_parent = parent;
       const menu = this.menuRepository.create(menuWriteDto);
       await this.em.persistAndFlush(menu);
@@ -161,5 +162,23 @@ export class MenuService {
     }
 
     return menu;
+  }
+
+  async deleteMenu(men_ids: number[]): Promise<void> {
+    if (!men_ids || men_ids.length === 0) {
+      throw new Error('No menu IDs provided for deletion.');
+    }
+
+    // Begin a transaction
+    await this.em.transactional(async (em) => {
+      for (const men_id of men_ids) {
+        const menu = await em.findOne(MenuEntity, { men_id });
+        if (menu) {
+          await em.removeAndFlush(menu);
+        } else {
+          console.warn(`Menu with ID ${men_id} not found.`);
+        }
+      }
+    });
   }
 }

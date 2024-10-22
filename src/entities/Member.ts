@@ -1,7 +1,7 @@
 // src/entities/Member.ts
 import { Entity, PrimaryKey, Property, Unique, Index } from '@mikro-orm/core';
 
-@Entity()
+@Entity({ tableName: 'member' })
 export class MemberEntity {
   @PrimaryKey()
   mem_id!: number;

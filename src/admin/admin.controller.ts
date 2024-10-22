@@ -82,8 +82,7 @@ export class AdminController {
 
   @Delete('layout/sitemap/delete')
   async deleteMenu(@Body('men_ids') men_ids) {
-    console.log(men_ids);
-    // return this.memberService.deleteMember(mem_id);
+    return this.MenuService.deleteMenu(men_ids);
   }
 
   @Get('member/:id')
