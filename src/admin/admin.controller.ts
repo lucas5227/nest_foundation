@@ -114,6 +114,29 @@ export class AdminController {
     return this.MenuService.deleteMenu(men_ids);
   }
 
+  @Get('popup')
+  @Render('admin/_layout/layout') // index.ejs 템플릿을 렌더링
+  async popupList() {
+    // TODO: 비로그인시 admin 접근 로그인
+    // TODO: 관리자 아닐때 user 메인으로
+    // const member = await this.memberService.getOneMember(mem_id);
+    const popups = '';
+    return { page: 'popup/list.ejs', title: '팝업관리', data: popups };
+  }
+
+  @Get('popup/write')
+  @Render('admin/_layout/layout') // index.ejs 템플릿을 렌더x`링
+  async popupWrite() {
+    // TODO: 비로그인시 admin 접근 로그인
+    // TODO: 관리자 아닐때 user 메인으로
+    let post = null;
+    // if (post_id) {
+    //   post = await this.PostService.getPost(post_id);
+    // }
+
+    return { page: 'popup/write.ejs', title: '팝업추가', post: post };
+  }
+
   @Get('member/:id')
   @Render('admin/_layout/layout') // index.ejs 템플릿을 렌더링
   async memberView(@Param('id') mem_id: number) {

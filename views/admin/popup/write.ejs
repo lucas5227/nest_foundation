@@ -1,0 +1,124 @@
+<div class="container mt-5">
+    <h2><%= title ;%></h2>
+    <form action="/admin/popup/write" method="POST" onsubmit="return saveContent();">
+        <input type="hidden" name="pop_id" value="<%//= post ? post.post_id : '' %>" />
+        <input type="hidden" name="mem_id" value="1" />
+
+<!--        <div class="table-responsive">-->
+        <div>
+            <table class="table">
+                <colgroup>
+                    <col width="200">
+                    <col>
+                </colgroup>
+                <tbody>
+                <tr>
+                    <th>제목 <span class="required" aria-required="true">*</span></th>
+                    <td>
+                        <input type="text" class="form-control" name="pop_title" value="">
+                        <small class="form-text text-muted">관리용 제목입니다. 사용자(홈페이지)에겐 표시되지 않습니다.</small>
+                    </td>
+                </tr>
+                <tr>
+                    <th>팝업 활성화</th>
+                    <td>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="pop_activated" id="pop_activated_1" value="1">
+                            <label class="form-check-label" for="pop_activated_1">활성</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="pop_activated" id="pop_activated_0" value="0" checked="checked">
+                            <label class="form-check-label" for="pop_activated_0">비활성</label>
+                        </div>
+                        <small class="form-text text-muted">종료일자가 지나면 자동으로 비활성 됩니다. 비활성을 원하시면 비활성 체크해주세요.</small>
+                    </td>
+                </tr>
+                <tr>
+                    <th>기간 <span class="required" aria-required="true">*</span></th>
+                    <td>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>시작일자</label>
+                                    <input type="date" class="form-control" name="pop_start_date" value="">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>종료일자</label>
+                                    <input type="date" class="form-control" name="pop_end_date" value="">
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <th>팝업 위치 <span class="required" aria-required="true">*</span></th>
+                    <td>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>좌측으로부터</label>
+                                    <input type="text" class="form-control" name="pop_left" placeholder="입력하신 수치는 px로 적용됩니다.">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>상단으로부터</label>
+                                    <input type="text" class="form-control" name="pop_top" placeholder="입력하신 수치는 px로 적용됩니다.">
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <th>팝업 크기 <span class="required" aria-required="true">*</span></th>
+                    <td>
+                        <div class="form-group">
+                            <label>가로길이</label>
+                            <input type="text" class="form-control" name="pop_width" placeholder="입력하신 수치는 px로 적용됩니다.">
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <th>오늘 하루 보지 않기 <span class="required" aria-required="true">*</span></th>
+                    <td>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="pop_today" value="1">
+                            <label class="form-check-label">사용</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="pop_today" value="0" checked="">
+                            <label class="form-check-label">사용하지 않음</label>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <th>팝업 내용</th>
+                    <td>
+                        <div id="summernote"><%//- data.page_content; %></div>
+                        <input type="hidden" id="summernote_content" name="page_content" />
+                    </td>
+                </tr>
+                <tr>
+                    <th>바로가기 버튼</th>
+                    <td>
+                        <div class="form-group">
+                            <input type="text" class="form-control mb-2" name="pop_link" placeholder="링크주소를 정확하게 입력해주세요." value="">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" name="pop_window" value="1">
+                                <label class="form-check-label">새 창에서 열기</label>
+                            </div>
+                            <small class="form-text text-muted">링크 주소를 입력하지 않으면 노출되지 않습니다.</small>
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="d-flex justify-content-end mt-3">
+            <button type="submit" class="btn btn-primary">저장하기</button>
+        </div>
+    </form>
+</div>

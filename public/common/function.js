@@ -28,9 +28,9 @@ function go_submit(action) {
 // Summernote 초기화
 $(document).ready(function() {
   $('#summernote').summernote({
-    placeholder: '게시글을 작성하세요.',
+    placeholder: '내용을 작성하세요.',
     tabsize: 2,
-    height: 120,
+    height: 300,
     toolbar: [
       ['style', ['style']],
       ['font', ['bold', 'underline', 'clear']],
