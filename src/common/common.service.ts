@@ -26,15 +26,22 @@ export class CommonService {
     };
   }
 
-  formattedDatetime(post_update_datetime: Date) {
+  formattedDatetime(post_update_datetime: Date, format = 'YYYY-MM-DD HH:mm:ss'): string {
     const parsedDate = new Date(post_update_datetime);
     const year = parsedDate.getFullYear();
-    const month = String(parsedDate.getMonth() + 1).padStart(2, '0'); // 월은 0부터 시작하므로 +1
+    const month = String(parsedDate.getMonth() + 1).padStart(2, '0'); // Month starts from 0, so we add 1
     const day = String(parsedDate.getDate()).padStart(2, '0');
     const hours = String(parsedDate.getHours()).padStart(2, '0');
     const minutes = String(parsedDate.getMinutes()).padStart(2, '0');
     const seconds = String(parsedDate.getSeconds()).padStart(2, '0');
 
-    return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+    // Replace format placeholders with actual values
+    return format
+      .replace('YYYY', year.toString())
+      .replace('MM', month)
+      .replace('DD', day)
+      .replace('HH', hours)
+      .replace('mm', minutes)
+      .replace('ss', seconds);
   }
 }

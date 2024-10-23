@@ -20,6 +20,7 @@ import { MenuModule } from './menu/menu.module';
 import { PostModule } from './post/post.module';
 import { PageModule } from './page/page.module';
 import { BoardModule } from './board/board.module';
+import { PopupModule } from './popup/popup.module';
 
 // src/app.module.ts
 @Module({
@@ -33,6 +34,7 @@ import { BoardModule } from './board/board.module';
     PageModule,
     BoardModule,
     ConfigModule,
+    PopupModule,
   ],
   controllers: [AdminController, UserController, MemberController],
   providers: [CommonService],

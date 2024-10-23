@@ -12,19 +12,6 @@ export class ConfigService {
   ) {}
 
   async saveConfig(cofigData: Record<string, string>) {
-    console.log(cofigData);
-    /*
-      cofigData =
-      {
-  site_meta_title_default: 'site_meta_title_default23',
-  site_meta_description_default: 'site_meta_description_default23',
-  site_meta_keywords_default: 'site_meta_keywords_default23',
-  site_meta_author_default: 'site_meta_author_default23',
-  og_title: 'og_title',
-  og_description: 'og_description'
-}
-
-    */
     for (const [key, value] of Object.entries(cofigData)) {
       let config = await this.ConfigRepository.findOne({ conf_key: key });
       if (config) {

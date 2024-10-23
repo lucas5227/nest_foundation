@@ -10,7 +10,7 @@ export class PostEntity {
   @Index()
   brd_id!: string;
 
-  @Property({ nullable: true }) // Content can be optional
+  @Property({ nullable: true })
   @Index()
   cat_id?: string;
 
@@ -18,10 +18,10 @@ export class PostEntity {
   @Index()
   mem_id!: string;
 
-  @Property({ length: 255 }) // Optional: Set a max length for the title
+  @Property({ length: 255 })
   post_title!: string;
 
-  @Property({ type: 'text', nullable: true }) // Content can be optional and of type text
+  @Property({ type: 'text', nullable: true })
   post_content?: string;
 
   @Property({ nullable: true })
@@ -48,6 +48,6 @@ export class PostEntity {
 
   @Property({ type: 'tinyint', default: 0 })
   post_del!: number;
-  
+
   post_display_date: string;
 }

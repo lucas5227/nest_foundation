@@ -17,6 +17,7 @@ import { Request } from 'express';
 import { CommonService } from '../common/common.service';
 import { MenuService } from '../menu/menu.service';
 import { ConfigService } from '../config/config.service';
+import { PopupService } from '../popup/popup.service';
 
 // TODO: .env 에서 admin 주소 변경가능하게끔 기존 conf 는 env 에 넣는다.
 @Controller('admin')
@@ -27,6 +28,7 @@ export class AdminController {
     private readonly CommonService: CommonService,
     private readonly MenuService: MenuService,
     private readonly ConfigService: ConfigService,
+    private readonly PopupService: PopupService,
   ) {}
 
   @Get('')
@@ -116,25 +118,51 @@ export class AdminController {
 
   @Get('popup')
   @Render('admin/_layout/layout') // index.ejs 템플릿을 렌더링
-  async popupList() {
+  async popupList(@Query('page') page: number) {
     // TODO: 비로그인시 admin 접근 로그인
     // TODO: 관리자 아닐때 user 메인으로
-    // const member = await this.memberService.getOneMember(mem_id);
-    const popups = '';
-    return { page: 'popup/list.ejs', title: '팝업관리', data: popups };
+    const total = await this.PopupService.getListTotal(); // 총 게시물 수 가져오기
+    const pagenation = this.CommonService.pagenation(total, 10, 10, page);
+    const list = await this.PopupService.getPopups(
+      pagenation.offset,
+      pagenation.limit,
+    );
+
+    const popups = list.map((popup) => ({
+      ...popup,
+      pop_display_date: this.CommonService.formattedDatetime(
+        popup.pop_datetime,
+      ),
+    }));
+    return {
+      page: 'popup/list.ejs',
+      title: '팝업관리',
+      data: popups,
+      paging: pagenation,
+    };
   }
 
   @Get('popup/write')
   @Render('admin/_layout/layout') // index.ejs 템플릿을 렌더x`링
-  async popupWrite() {
+  async popupWrite(@Query('pop_id') pop_id) {
     // TODO: 비로그인시 admin 접근 로그인
     // TODO: 관리자 아닐때 user 메인으로
-    let post = null;
-    // if (post_id) {
-    //   post = await this.PostService.getPost(post_id);
-    // }
+    let popup = null;
+    let title = '팝업관리';
+    if (pop_id) {
+      popup = await this.PopupService.getOnePopup(pop_id);
+      popup.pop_start_date = this.CommonService.formattedDatetime(popup.pop_start_date, 'YYYY-MM-DD');
+      popup.pop_end_date = this.CommonService.formattedDatetime(popup.pop_end_date, 'YYYY-MM-DD');
+      title = '팝업수정';
+    }
+    return { page: 'popup/write.ejs', title: title, data: popup };
+  }
 
-    return { page: 'popup/write.ejs', title: '팝업추가', post: post };
+  @Post('popup/write')
+  @Redirect('/admin/popup')
+  async popupSave(@Body() popupWrite, @Req() req: Request) {
+    popupWrite.pop_ip = req.ip;
+    return await this.PopupService.writePopup(popupWrite);
   }
 
   @Get('member/:id')
