@@ -9,12 +9,12 @@ import {
   Query,
   Redirect,
   Render,
-  Req,
+  Req, Res,
 } from '@nestjs/common';
 import { MemberService } from '../member/member.service';
 import { PostService } from '../post/post.service';
 import { PostEntity } from '../entities/Post';
-import { Request } from 'express';
+import { Request, Response } from 'express';
 import { CommonService } from '../common/common.service';
 import { MenuService } from '../menu/menu.service';
 import { ConfigService } from '../config/config.service';
@@ -37,17 +37,26 @@ export class AdminController {
   async main() {
     // TODO: 비로그인시 admin 접근 로그인
     // TODO: 관리자 아닐때 user 메인으로
-    return { page: 'main.ejs', message: 'Here is ADMIN MAIN!' };
+    const boards = await this.MenuService.getBoards();
+    return {
+      page: 'main.ejs',
+      message: 'Here is ADMIN MAIN!',
+      data: { boards },
+    };
   }
 
-  @Get('memberList')
+  @Get('member')
   @Render('admin/_layout/layout') // index.ejs 템플릿을 렌더링
   async memberList() {
     // TODO: 비로그인시 admin 접근 로그인
     // TODO: 관리자 아닐때 user 메인으로
-    const allMember = await this.memberService.getAllMember();
-
-    return { page: 'member/list.ejs', title: '회원관리', members: allMember };
+    const members = await this.memberService.getAllMember();
+    const boards = await this.MenuService.getBoards();
+    return {
+      page: 'member/list.ejs',
+      title: '회원관리',
+      data: { boards, members },
+    };
   }
 
   @Get('layout/head')
@@ -62,10 +71,11 @@ export class AdminController {
       'og_description',
     ];
     const head = await this.ConfigService.getConfig(conf_keys);
+    const boards = await this.MenuService.getBoards();
     return {
       page: 'layout/head.ejs',
       title: '&lt;head&gt; 설정',
-      data: head,
+      data: { boards, head },
       updated: update ? true : false,
     };
   }
@@ -80,10 +90,11 @@ export class AdminController {
   @Render('admin/_layout/layout')
   async siteMap() {
     const menuTree = await this.MenuService.getMenu();
+    const boards = await this.MenuService.getBoards();
     return {
       page: 'layout/list.ejs',
       title: '사이트맵 설정',
-      data: menuTree,
+      data: { menuTree, boards },
     };
   }
 
@@ -93,6 +104,7 @@ export class AdminController {
     let menu = {
       men_parent: parent,
     };
+    const boards = await this.MenuService.getBoards();
     let title = '사이트맵 등록';
     if (men_id) {
       menu = await this.MenuService.getOneMenu(men_id);
@@ -101,7 +113,7 @@ export class AdminController {
     return {
       page: 'layout/write.ejs',
       title: title,
-      data: menu,
+      data: { boards, menu },
     };
   }
 
@@ -135,10 +147,11 @@ export class AdminController {
         popup.pop_datetime,
       ),
     }));
+    const boards = await this.MenuService.getBoards();
     return {
       page: 'popup/list.ejs',
       title: '팝업관리',
-      data: popups,
+      data: { boards, popups },
       paging: pagenation,
     };
   }
@@ -152,11 +165,18 @@ export class AdminController {
     let title = '팝업관리';
     if (pop_id) {
       popup = await this.PopupService.getOnePopup(pop_id);
-      popup.pop_start_date = this.CommonService.formattedDatetime(popup.pop_start_date, 'YYYY-MM-DD');
-      popup.pop_end_date = this.CommonService.formattedDatetime(popup.pop_end_date, 'YYYY-MM-DD');
+      popup.pop_start_date = this.CommonService.formattedDatetime(
+        popup.pop_start_date,
+        'YYYY-MM-DD',
+      );
+      popup.pop_end_date = this.CommonService.formattedDatetime(
+        popup.pop_end_date,
+        'YYYY-MM-DD',
+      );
       title = '팝업수정';
     }
-    return { page: 'popup/write.ejs', title: title, data: popup };
+    const boards = await this.MenuService.getBoards();
+    return { page: 'popup/write.ejs', title: title, data: { popup, boards } };
   }
 
   @Post('popup/write')
@@ -181,38 +201,61 @@ export class AdminController {
     // TODO: 비로그인시 admin 접근 로그인
     // TODO: 관리자 아닐때 user 메인으로
     const member = await this.memberService.getOneMember(mem_id);
-    return { page: 'member/write.ejs', title: '회원정보수정', member: member };
+    const boards = await this.MenuService.getBoards();
+    return {
+      page: 'member/write.ejs',
+      title: '회원정보수정',
+      data: { boards, member },
+    };
   }
 
-  @Get('board/write/:brd_key')
+  @Get('board/write/:brd_id')
   @Render('admin/_layout/layout') // index.ejs 템플릿을 렌더x`링
-  async postWrite(@Query('update') post_id: number) {
+  async postWrite(
+    @Param('brd_id') brd_id: number,
+    @Query('update') post_id: number,
+  ) {
     // TODO: 비로그인시 admin 접근 로그인
     // TODO: 관리자 아닐때 user 메인으로
     let post = null;
     if (post_id) {
       post = await this.PostService.getPost(post_id);
     }
-
-    return { page: 'board/write.ejs', title: 'boardTitle', post: post };
+    const boards = await this.MenuService.getBoards();
+    return {
+      page: 'board/write.ejs',
+      title: 'boardTitle',
+      data: { boards, brd_id, post },
+    };
   }
 
-  @Post('/board/write/:brd_key')
-  @Redirect('/admin/board/brd_key')
+  @Post('/board/write')
   async writePost(
     @Body() writePost: Partial<PostEntity>,
     @Req() req: Request,
-  ): Promise<number> {
-    let result = null;
-    if (writePost.post_id) {
-      result = this.PostService.updatePost(writePost);
-    } else {
-      delete writePost.post_id;
-      writePost.post_register_ip = req.ip;
-      result = this.PostService.createPost(writePost);
-    }
+    @Res() res: Response, // Inject the response object
+  ): Promise<void> {  // Keep the return type as void
+    let result: any = null;
 
-    return result;
+    try {
+      if (writePost.post_id) {
+        result = await this.PostService.updatePost(writePost);
+      } else {
+        delete writePost.post_id;
+        writePost.post_register_ip = req.ip;
+        result = await this.PostService.createPost(writePost);
+      }
+
+      const brd_id = writePost.brd_id;
+      if (result && brd_id) {
+        res.redirect(`/admin/board/${brd_id}`);  // Call redirect without return
+      } else {
+        res.status(400).send('Board ID not provided for redirect.');
+      }
+    } catch (error) {
+      console.error('Error in writePost:', error);
+      res.status(500).send('Internal Server Error');
+    }
   }
 
   @Post('/post/delete')
@@ -223,17 +266,15 @@ export class AdminController {
     return true;
   }
 
-  @Get('board/:brd_key')
+  @Get('board/:brd_id')
   @Render('admin/_layout/layout')
   async list(
-    @Param('brd_key') brd_key: string,
+    @Param('brd_id') brd_id: string,
     @Query('cat_id') cat_id: string,
     @Query('page') page: number,
   ) {
     // TODO: 비로그인 시 admin 접근 로그인 처리
     // TODO: 관리자가 아닐 경우 user 메인으로 리다이렉트
-
-    const brd_id = '1'; // brd_key를 사용해서 실제 board 정보를 가져올 수 있음
     const total = await this.PostService.getListTotal(brd_id); // 총 게시물 수 가져오기
     const pagenation = this.CommonService.pagenation(total, 10, 10, page); // 페이지네이션 처리
 
@@ -249,12 +290,12 @@ export class AdminController {
         post.post_update_datetime,
       ),
     }));
-
+    const boards = await this.MenuService.getBoards();
     // 렌더링할 데이터 반환
     return {
       page: 'board/list.ejs',
       title: 'boardTitle',
-      data: posts, // list 대신 posts를 반환
+      data: { boards, posts },
       paging: pagenation, // 페이지네이션 정보
     };
   }

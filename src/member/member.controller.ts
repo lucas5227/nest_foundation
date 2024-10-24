@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Param, Post, Req } from '@nestjs/common';
+import { Body, Controller, Delete, Param, Post, Redirect, Req } from '@nestjs/common';
 import { MemberEntity } from '../entities/Member';
 import { MemberService } from './member.service';
 
@@ -7,6 +7,7 @@ export class MemberController {
   constructor(private readonly memberService: MemberService) {}
 
   @Post('/member/register')
+  @Redirect('/')
   async registerMember(
     @Body() createMemberDto: Partial<MemberEntity>,
   ): Promise<MemberEntity> {

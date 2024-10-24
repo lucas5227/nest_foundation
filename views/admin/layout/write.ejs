@@ -1,7 +1,7 @@
 <div class="container mt-5">
     <h2><%= title ;%></h2>
-    <form action="/admin/layout/sitemap/write/<%= data.men_parent ;%>" method="POST" onsubmit="return saveContent();">
-        <input type="hidden" name="men_id" value="<%= data.men_id ;%>" />
+    <form action="/admin/layout/sitemap/write/<%= data.menu.men_parent ;%>" method="POST" onsubmit="return saveContent();">
+        <input type="hidden" name="men_id" value="<%= data.menu.men_id ;%>" />
         <table class="table">
             <tbody>
             <tr>
@@ -9,9 +9,9 @@
                 <td>
                     <select class="form-select" id="men_type" name="men_type" required>
                         <option value="" disabled selected>종류를 선택하세요</option>
-                        <option value="page" <%= data.men_type == 'page' ? 'selected' : '' ;%>>페이지</option>
-                        <option value="board" <%= data.men_type == 'board' ? 'selected' : '' ;%>>게시판</option>
-                        <option value="link" <%= data.men_type == 'link' ? 'selected' : '' ;%>>링크</option>
+                        <option value="page" <%= data.menu.men_type == 'page' ? 'selected' : '' ;%>>페이지</option>
+                        <option value="board" <%= data.menu.men_type == 'board' ? 'selected' : '' ;%>>게시판</option>
+                        <option value="link" <%= data.menu.men_type == 'link' ? 'selected' : '' ;%>>링크</option>
                     </select>
                 </td>
             </tr>
@@ -20,7 +20,7 @@
                 <td>
                     <input type="text" class="form-control" id="men_code" name="men_code"
                            placeholder="코드르 입력하세요"
-                           value="<%= data.men_code ;%>"
+                           value="<%= data.menu.men_code ;%>"
                            required>
                 </td>
             </tr>
@@ -29,14 +29,14 @@
                 <td>
                     <input type="text" class="form-control" id="men_title" name="men_title"
                            placeholder="메뉴명을 입력하세요"
-                           value="<%= data.men_title ;%>"
+                           value="<%= data.menu.men_title ;%>"
                            required>
                 </td>
             </tr>
             <tr id="page_content">
                 <td><label for="page_content" class="form-label">페이지 내용</label></td>
                 <td>
-                    <div id="summernote"><%- data.page_content; %></div>
+                    <div id="summernote"><%- data.menu.page_content; %></div>
                     <input type="hidden" id="summernote_content" name="page_content" />
 
                 </td>
@@ -48,12 +48,12 @@
                         <div class="form-check">
                             <input type="checkbox" class="form-check-input" id="men_link_window_open"
                                    name="men_link_window_open"
-                                   value="1" <%= data.men_link_window_open == 1 ? 'checked' : '' ;%>>
+                                   value="1" <%= data.menu.men_link_window_open == 1 ? 'checked' : '' ;%>>
                             <label class="form-check-label" for="men_link_window_open">새창 열기</label>
                         </div>
                         <div class="mt-2">
                             <input type="text" class="form-control" id="men_link" name="men_link"
-                                   placeholder="링크를 입력하세요" value="<%= data.men_link ;%>">
+                                   placeholder="링크를 입력하세요" value="<%= data.menu.men_link ;%>">
                         </div>
                     </div>
                 </td>
@@ -63,11 +63,48 @@
                 <td>
                     <select class="form-select" id="brd_skin" name="brd_skin">
                         <option value="" disabled selected>스킨을 선택하세요</option>
-                        <option value="bulletin" <%= data.brd_skin == 'bulletin' ? 'selected' : '' ;%>>bulletin</option>
-                        <option value="faq" <%= data.brd_skin == 'faq' ? 'selected' : '' ;%>>faq</option>
-                        <option value="gallery" <%= data.brd_skin == 'gallery' ? 'selected' : '' ;%>>gallery</option>
+                        <option value="bulletin" <%= data.menu.brd_skin == 'bulletin' ? 'selected' : '' ;%>>bulletin</option>
+                        <option value="faq" <%= data.menu.brd_skin == 'faq' ? 'selected' : '' ;%>>faq</option>
+                        <option value="gallery" <%= data.menu.brd_skin == 'gallery' ? 'selected' : '' ;%>>gallery</option>
                     </select>
                 </td>
+            </tr>
+            <tr id="board_category">
+                <td>
+                    <label for="boardCategory" class="form-label">카테고리(TODO:)</label>
+                </td>
+                <td>
+                    <!-- Button Group -->
+                    <div class="mb-2">
+                        <button type="button" class="btn btn-primary btn-sm">추가</button>
+                        <button type="button" class="btn btn-danger btn-sm">삭제</button>
+                    </div>
+
+                    <!-- Table -->
+                    <table class="table table-bordered table-striped">
+                        <thead class="table-dark">
+                        <tr>
+                            <th>
+                                <input type="checkbox" id="chkAll">
+                            </th>
+                            <th>카테고리명</th>
+                            <th>정렬</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <!-- Example row -->
+                        <tr>
+                            <td>
+                                <input type="checkbox" class="form-check-input">
+                            </td>
+                            <td>Example Category</td>
+                            <td>1</td>
+                        </tr>
+                        <!-- Add dynamic rows here -->
+                        </tbody>
+                    </table>
+                </td>
+            </tr>
             </tr>
 
             <tr>

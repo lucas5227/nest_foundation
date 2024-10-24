@@ -181,4 +181,9 @@ export class MenuService {
       }
     });
   }
+
+  async getBoards() {
+    const boards = await this.boardRepository.findAll();
+    return boards;
+  }
 }

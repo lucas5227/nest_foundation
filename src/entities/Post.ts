@@ -1,7 +1,8 @@
 // src/entities/PostEntity.ts
 import { Entity, PrimaryKey, Property, Index } from '@mikro-orm/core';
 
-@Entity({ tableName: 'post' }) // Optional: Define table name explicitly
+require('dotenv').config();
+@Entity({ tableName: process.env.DATABASE_PREFIX + 'post' }) // Optional: Define table name explicitly
 export class PostEntity {
   @PrimaryKey()
   post_id!: number;

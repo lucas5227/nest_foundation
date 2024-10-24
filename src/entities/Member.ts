@@ -1,7 +1,8 @@
 // src/entities/Member.ts
 import { Entity, PrimaryKey, Property, Unique, Index } from '@mikro-orm/core';
+require('dotenv').config();
 
-@Entity({ tableName: 'member' })
+@Entity({ tableName: process.env.DATABASE_PREFIX + 'member' })
 export class MemberEntity {
   @PrimaryKey()
   mem_id!: number;

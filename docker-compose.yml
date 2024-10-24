@@ -41,6 +41,7 @@ services:
       DATABASE_USER: foundation
       DATABASE_PASSWORD: foundation_5227
       DATABASE_NAME: nest_foundation
+      DATABASE_PREFIX: nf_
       MINIO_ENDPOINT: http://minio:9000
       MINIO_ACCESS_KEY: minio
       MINIO_SECRET_KEY: minio_5227

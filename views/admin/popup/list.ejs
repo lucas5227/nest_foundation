@@ -20,7 +20,7 @@
             </tr>
         </thead>
         <tbody>
-        <% data.forEach((popup, idx) => { %>
+        <% data.popups.forEach((popup, idx) => { %>
             <tr>
                 <td><input type="checkbox" name="chk[]" value="<%= popup.pop_id %>"></td>
                 <td><%=idx+1 %></th>

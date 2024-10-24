@@ -136,7 +136,7 @@
                     </a>
                     <div class="collapse" id="collapseMembers" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                         <nav class="sb-sidenav-menu-nested nav">
-                            <a class="nav-link" href="/admin/memberList">회원관리</a>
+                            <a class="nav-link" href="/admin/member">회원관리</a>
                             <a class="nav-link" href="layout-sidenav-light.html">회원그룹관리</a>
                             <a class="nav-link" href="layout-sidenav-light.html">로그인현황</a>
                             <a class="nav-link" href="layout-sidenav-light.html">휴면계정관리</a>
@@ -151,9 +151,9 @@
                     </a>
                     <div class="collapse" id="collapseBoards" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                         <nav class="sb-sidenav-menu-nested nav">
-                            <a class="nav-link" href="/admin/board/brd_key">Board 1</a>
-                            <a class="nav-link" href="layout-static.html">Board 2</a>
-                            <a class="nav-link" href="layout-static.html">Board 3</a>
+                            <% data.boards.forEach(board => { %>
+                                <a class="nav-link" href="/admin/board/<%= board.brd_id %>"><%= board.brd_title %></a>
+                            <% }) %>
                         </nav>
                     </div>
                 </div>

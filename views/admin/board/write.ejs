@@ -1,9 +1,9 @@
 <div class="container mt-5">
-    <h2>게시물 <%= post ? '수정' : '작성'; %></h2>
-    <form action="/admin/board/write/1" method="POST" onsubmit="return saveContent();">
+    <h2>게시물 <%= data.post ? '수정' : '작성'; %></h2>
+    <form action="/admin/board/write" method="post" onsubmit="return saveContent();">
         <input type="hidden" name="cmd" value="" />
-        <input type="hidden" name="brd_id" value="1" />
-        <input type="hidden" name="post_id" value="<%= post ? post.post_id : '' %>" />
+        <input type="hidden" name="brd_id" value="<%= data.brd_id %>" />
+        <input type="hidden" name="post_id" value="<%= data.post ? data.post.data.post_id : '' %>" />
         <input type="hidden" name="mem_id" value="1" />
         <table class="table">
             <tbody>
@@ -12,12 +12,12 @@
                 <td>
                     <input type="text" class="form-control" id="post_title" name="post_title"
                            placeholder="게시물 제목을 입력하세요"
-                           value="<%= post ? post.post_title : '' %>"
+                           value="<%= data.post ? data.post.data.post_title : '' %>"
                            required>
                 </td>
             </tr>
             <tr>
-                <td><label for="postCategory" class="form-label">카테고리</label></td>
+                <td><label for="data.postCategory" class="form-label">카테고리</label></td>
                 <td>
                     <select class="form-select" id="cat_id" name="postCategory" required>
                         <option value="" disabled selected>카테고리를 선택하세요</option>
@@ -28,9 +28,9 @@
                 </td>
             </tr>
             <tr>
-                <td><label for="post_content" class="form-label">내용</label></td>
+                <td><label for="data.post_content" class="form-label">내용</label></td>
                 <td>
-                    <div id="summernote"><%- post ? post.post_content : ''; %></div>
+                    <div id="summernote"><%- data.post ? data.post.data.post_content : ''; %></div>
                     <input type="hidden" id="summernote_content" name="post_content" />
 
                 </td>

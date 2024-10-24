@@ -6,49 +6,49 @@
                     <form>
                         <!-- User ID -->
                         <div class="form-floating mb-3">
-                            <input class="form-control" id="inputId" type="text" placeholder="User ID" value="<%= member.mem_userid %>" />
+                            <input class="form-control" id="inputId" type="text" placeholder="User ID" value="<%= data.member.mem_userid %>" />
                             <label for="inputId">User ID</label>
                         </div>
 
                         <!-- Email Address -->
                         <div class="form-floating mb-3">
-                            <input class="form-control" id="inputEmail" type="email" placeholder="name@example.com" value="<%= member.mem_email %>" />
+                            <input class="form-control" id="inputEmail" type="email" placeholder="name@example.com" value="<%= data.member.mem_email %>" />
                             <label for="inputEmail">Email address</label>
                         </div>
 
                         <!-- Password -->
                         <div class="form-floating mb-3">
-                            <input class="form-control" id="inputPassword" type="password" placeholder="Password" value="<%= member.mem_password %>" />
+                            <input class="form-control" id="inputPassword" type="password" placeholder="Password" value="<%= data.member.mem_password %>" />
                             <label for="inputPassword">Password</label>
                         </div>
 
                         <!-- Username -->
                         <div class="form-floating mb-3">
-                            <input class="form-control" id="inputUsername" type="text" placeholder="Username" value="<%= member.mem_username %>" />
+                            <input class="form-control" id="inputUsername" type="text" placeholder="Username" value="<%= data.member.mem_username %>" />
                             <label for="inputUsername">Username</label>
                         </div>
 
                         <!-- Receive Email Notifications -->
                         <div class="form-check mb-3">
-                            <input class="form-check-input" type="checkbox" id="inputReceiveEmail" <%= member.mem_receive_email ? 'checked' : '' %> />
+                            <input class="form-check-input" type="checkbox" id="inputReceiveEmail" <%= data.member.mem_receive_email ? 'checked' : '' %> />
                             <label class="form-check-label" for="inputReceiveEmail">Receive Email Notifications</label>
                         </div>
 
                         <!-- Admin Status -->
                         <div class="form-check mb-3">
-                            <input class="form-check-input" type="checkbox" id="inputIsAdmin" <%= member.mem_is_admin ? 'checked' : '' %> />
+                            <input class="form-check-input" type="checkbox" id="inputIsAdmin" <%= data.member.mem_is_admin ? 'checked' : '' %> />
                             <label class="form-check-label" for="inputIsAdmin">Is Admin</label>
                         </div>
 
                         <!-- Register Date and Last Login Date -->
                         <div class="mb-3">
                             <label for="inputRegisterDate" class="form-label">Registration Date</label>
-                            <input class="form-control" id="inputRegisterDate" type="datetime-local" value="<%= new Date(member.mem_register_datetime).toISOString().slice(0, 16) %>" disabled/>
+                            <input class="form-control" id="inputRegisterDate" type="datetime-local" value="<%= new Date(data.member.mem_register_datetime).toISOString().slice(0, 16) %>" disabled/>
                         </div>
 
                         <div class="mb-3">
                             <label for="inputLastLoginDate" class="form-label">Last Login Date</label>
-                            <input class="form-control" id="inputLastLoginDate" type="datetime-local" value="<%= new Date(member.mem_lastlogin_datetime).toISOString().slice(0, 16) %>" disabled/>
+                            <input class="form-control" id="inputLastLoginDate" type="datetime-local" value="<%= new Date(data.member.mem_lastlogin_datetime).toISOString().slice(0, 16) %>" disabled/>
                         </div>
 
                         <div class="mt-4 mb-0">

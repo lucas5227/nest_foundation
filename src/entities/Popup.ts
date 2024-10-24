@@ -1,6 +1,7 @@
 import { Entity, PrimaryKey, Property } from '@mikro-orm/core';
 
-@Entity({ tableName: 'popup' }) // 테이블 이름 지정
+require('dotenv').config();
+@Entity({ tableName: process.env.DATABASE_PREFIX + 'popup' }) // 테이블 이름 지정
 export class PopupEntity {
   @PrimaryKey()
   pop_id!: number;

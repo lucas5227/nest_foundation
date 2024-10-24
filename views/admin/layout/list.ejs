@@ -24,7 +24,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                <%data.map((item) => {%>
+                <%data.menuTree.map((item) => {%>
                     <tr class="depth-1" data-depth="1" data-men_id="<%=item.men_id;%>">
                         <td><input type="checkbox" name="chk[]" value="<%=item.men_id;%>"></td>
                         <td><%= item.men_code ;%></td>

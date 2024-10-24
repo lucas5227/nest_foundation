@@ -1,7 +1,8 @@
 // src/entities/PostEntity.ts
 import { Entity, PrimaryKey, Property, Index } from '@mikro-orm/core';
 
-@Entity({ tableName: 'page' })
+require('dotenv').config();
+@Entity({ tableName: process.env.DATABASE_PREFIX + 'page' })
 export class PageEntity {
   @PrimaryKey()
   page_id!: number;

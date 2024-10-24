@@ -1,7 +1,8 @@
 // src/entities/PostEntity.ts
 import { Entity, PrimaryKey, Property, Index } from '@mikro-orm/core';
 
-@Entity({ tableName: 'menu' })
+require('dotenv').config();
+@Entity({ tableName: process.env.DATABASE_PREFIX + 'menu' })
 export class MenuEntity {
   @PrimaryKey()
   men_id!: number;
