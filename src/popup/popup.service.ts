@@ -65,4 +65,15 @@ export class PopupService {
   async getOnePopup(pop_id) {
     return await this.PopupRepository.findOne({ pop_id });
   }
+
+  async deletePopup(pop_ids: string[]) {
+    const numericPopIds = pop_ids.map(id => parseInt(id, 10));
+    const popups = await this.em.find(PopupEntity, { pop_id: { $in: numericPopIds } });
+    if (popups.length === 0) {
+      throw new Error('No popups found with the given IDs');
+    }
+    await this.em.removeAndFlush(popups);
+
+    return true;
+  }
 }

@@ -1,5 +1,12 @@
 <div class="container mt-5">
     <h2><%= title; %></h2>
+    <div class="d-flex justify-content-end mt-3">
+        <% if(data){ %>
+            <button type="submit" class="btn btn-danger"
+                    onclick="deleteOne('/admin/popup', <%= data ? data.pop_id : '' %>);">삭제
+            </button>
+        <% } %>
+    </div>
     <form action="/admin/popup/write" method="POST" onsubmit="return saveContent();">
         <input type="hidden" name="pop_id" value="<%= data ? data.pop_id : '' %>" />
         <input type="hidden" name="mem_id" value="1" />
@@ -122,7 +129,8 @@
                                    name="pop_link" value="<%= data ? data.pop_link : '' %>"
                                    placeholder="링크주소를 정확하게 입력해주세요." value="">
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" name="pop_window" value="1" <%= data && data.pop_window == 1? 'checked' : ''%>>
+                                <input class="form-check-input" type="checkbox" name="pop_window"
+                                       value="1" <%= data && data.pop_window == 1 ? 'checked' : '' %>>
                                 <label class="form-check-label">새 창에서 열기</label>
                             </div>
                             <small class="form-text text-muted">링크 주소를 입력하지 않으면 노출되지 않습니다.</small>

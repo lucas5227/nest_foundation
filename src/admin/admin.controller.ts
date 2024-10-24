@@ -1,4 +1,5 @@
 import {
+  BadRequestException,
   Body,
   Controller,
   Delete,
@@ -163,6 +164,15 @@ export class AdminController {
   async popupSave(@Body() popupWrite, @Req() req: Request) {
     popupWrite.pop_ip = req.ip;
     return await this.PopupService.writePopup(popupWrite);
+  }
+
+  @Delete('popup')
+  async deletePopup(@Body('ids') pop_ids: string[]) {
+    if (!Array.isArray(pop_ids)) {
+      throw new BadRequestException('Invalid data format.');
+    }
+
+    return await this.PopupService.deletePopup(pop_ids);
   }
 
   @Get('member/:id')
