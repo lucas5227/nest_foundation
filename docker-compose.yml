@@ -45,6 +45,7 @@ services:
       MINIO_ENDPOINT: http://minio:9000
       MINIO_ACCESS_KEY: minio
       MINIO_SECRET_KEY: minio_5227
+      MINIO_REGION: ap-northeast-2 # AWS Region SEOUL
     ports:
       - '3000:3000'
     depends_on:

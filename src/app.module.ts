@@ -21,6 +21,9 @@ import { PostModule } from './post/post.module';
 import { PageModule } from './page/page.module';
 import { BoardModule } from './board/board.module';
 import { PopupModule } from './popup/popup.module';
+import { MinioModule } from './minio/minio.module';
+
+import { MinioConfigModule } from './minio-config/minio-config.module';
 
 // src/app.module.ts
 @Module({
@@ -35,6 +38,8 @@ import { PopupModule } from './popup/popup.module';
     BoardModule,
     ConfigModule,
     PopupModule,
+    MinioModule,
+    MinioConfigModule,
   ],
   controllers: [AdminController, UserController, MemberController],
   providers: [CommonService],
