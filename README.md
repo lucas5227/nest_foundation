@@ -60,6 +60,7 @@ This project utilizes Docker Compose to manage and run the following services:
     - `DATABASE_USER`: `nest_user`
     - `DATABASE_PASSWORD`: `foundation_5227`
     - `DATABASE_NAME`: `nest_foundation`
+    -  DATABASE_PREFIX: nf_
     - `MINIO_ENDPOINT`: `http://minio:9000`
     - `MINIO_ACCESS_KEY`: `minio`
     - `MINIO_SECRET_KEY`: `minio_5227`

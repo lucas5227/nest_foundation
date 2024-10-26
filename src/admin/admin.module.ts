@@ -12,7 +12,6 @@ import { PageEntity } from '../entities/Page';
 import { BoardEntity } from '../entities/Board';
 import { ConfigService } from '../config/config.service';
 import { ConfigEntity } from '../entities/Config';
-import { LayoutController } from './layout/layout.controller';
 import { PopupEntity } from '../entities/Popup';
 import { PopupService } from '../popup/popup.service';
 
@@ -28,7 +27,7 @@ import { PopupService } from '../popup/popup.service';
       PopupEntity,
     ]),
   ],
-  controllers: [LayoutController, AdminController],
+  controllers: [AdminController],
   providers: [
     MemberService,
     PostService,
