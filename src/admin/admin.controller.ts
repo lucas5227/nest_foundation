@@ -68,7 +68,9 @@ export class AdminController {
       'site_meta_keywords_default',
       'site_meta_author_default',
       'og_title',
+      'og_image',
       'og_description',
+      'favicon',
     ];
     const head = await this.ConfigService.getConfig(conf_keys);
     const boards = await this.MenuService.getBoards();

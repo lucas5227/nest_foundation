@@ -1,6 +1,6 @@
 <div class="container mt-4">
     <div class="content">
-        <h2><%- title ;%></h2>
+        <h2><%- title; %></h2>
         <div class="top_help alert alert-info mt-3">
             <p><strong>Notice</strong></p>
             <ul class="list-unstyled">
@@ -35,28 +35,28 @@
                                     <th>Title</th>
                                     <td>
                                         <input type="text" name="site_meta_title_default" class="form-control"
-                                               value="<%=data.head.site_meta_title_default%>">
+                                               value="<%= data.head.site_meta_title_default ;%>">
                                     </td>
                                 </tr>
                                 <tr>
                                     <th>meta description</th>
                                     <td>
                                         <input type="text" name="site_meta_description_default" class="form-control"
-                                               value="<%=data.head.site_meta_description_default%>">
+                                               value="<%= data.head.site_meta_description_default ;%>">
                                     </td>
                                 </tr>
                                 <tr>
                                     <th>meta keywords</th>
                                     <td>
                                         <input type="text" name="site_meta_keywords_default" class="form-control"
-                                               value="<%=data.head.site_meta_keywords_default%>">
+                                               value="<%= data.head.site_meta_keywords_default ;%>">
                                     </td>
                                 </tr>
                                 <tr>
                                     <th>meta author</th>
                                     <td>
                                         <input type="text" name="site_meta_author_default" class="form-control"
-                                               value="<%=data.head.site_meta_author_default%>">
+                                               value="<%= data.head.site_meta_author_default ;%>">
                                     </td>
                                 </tr>
                                 </tbody>
@@ -72,20 +72,23 @@
                                 <tr>
                                     <th>Title</th>
                                     <td>
-                                        <input type="text" name="og_title" class="form-control" value="<%=data.head.og_title%>">
+                                        <input type="text" name="og_title" class="form-control"
+                                               value="<%= data.head.og_title ;%>">
                                     </td>
                                 </tr>
                                 <tr>
                                     <th>Image</th>
                                     <td>
-                                        <!-- Dropzone for OG Image -->
-                                        <div class="dropzone" id="ogImageDropzone"></div>
+                                        <div class="dropzone" id="ogImageDropzone" ></div>
+                                        <input type="hidden" name="og_image" value="http://localhost:9000/nf-bucket/db27f6dfff071c5d03075d0092d506069e62894df0e21355f458462c0aea238f.JPG">
+                                        <script>drawDropzone('ogImageDropzone', 'og_image')</script>
                                     </td>
                                 </tr>
                                 <tr>
                                     <th>Description</th>
                                     <td>
-                                        <input type="text" name="og_description" class="form-control" value="<%=data.head.og_description%>">
+                                        <input type="text" name="og_description" class="form-control"
+                                               value="<%= data.head.og_description ;%>">
                                     </td>
                                 </tr>
                                 </tbody>
@@ -95,8 +98,9 @@
                     <tr>
                         <th>파비콘</th>
                         <td>
-                            <!-- Dropzone for Favicon -->
-                            <div class="dropzone" id="faviconDropzone"></div>
+<!--                            <div class="dropzone" id="faviconDropzone"></div>-->
+<!--                            <input type="hidden" name="favicon" value="<%= data.head.favicon ;%>">-->
+<!--                            <script>drawDropzone('faviconDropzone', 'favicon')</script>-->
                         </td>
                     </tr>
                     </tbody>
@@ -110,37 +114,15 @@
 </div>
 
 <script>
-  Dropzone.options.ogImageDropzone = {
-    url: '/minio/upload', // 파일 업로드를 위한 엔드포인트
-    // maxFilesize: 2, // MB
-    acceptedFiles: 'image/*',
-    dictDefaultMessage: 'OG 이미지를 여기에 드롭하거나 클릭하여 업로드하세요',
-    paramName: 'file',
-    params: { type: 'og-image' }, // type 파라미터 추가
-    maxFiles: 1,
-
-    init: function() {
-      this.on("success", function(file, response) {
-        console.log("File uploaded successfully:", file);
-        console.log("Server response:", response);
-      });
-
-      this.on("error", function(file, errorMessage) {
-        console.error("File upload error:", errorMessage);
-        console.error("Failed file:", file);
-      });
-    }
-    };
-
   // Dropzone configuration for Favicon
-  Dropzone.options.faviconDropzone = {
-    url: '/upload/favicon',
-    maxFilesize: 1, // MB
-    acceptedFiles: '.ico,.png',
-    dictDefaultMessage: '파비콘 파일을 여기에 드롭하거나 클릭하여 업로드하세요',
-    paramName: 'favicon',
-    maxFiles: 1
-  };
+  // Dropzone.options.faviconDropzone = {
+  //   url: '/upload/favicon',
+  //   maxFilesize: 1, // MB
+  //   acceptedFiles: '.ico,.png',
+  //   dictDefaultMessage: '파비콘 파일을 여기에 드롭하거나 클릭하여 업로드하세요',
+  //   paramName: 'favicon',
+  //   maxFiles: 1
+  // };
   <% if(updated){ %>
   alert('저장되었습니다.');
   <% } %>

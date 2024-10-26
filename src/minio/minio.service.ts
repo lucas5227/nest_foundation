@@ -50,8 +50,6 @@ export class MinioService {
     const hash = createHash('sha256')
       .update(file.originalname + Date.now().toString())
       .digest('hex');
-    console.log('file: ', file); //IMG_1290.JPG
-    console.log('file.originalname: ', file.originalname); //IMG_1290.JPG
     const extension = path.extname(file.originalname); // Get the file extension
     // console.log('extension: ', file.originalname); //IMG_1290.JPG
     const hashedName = `${hash}${extension}`; // Combine hash with the extension
@@ -63,8 +61,6 @@ export class MinioService {
     };
 
     await this.s3.upload(params).promise(); // Upload the file
-    console.log(`File uploaded: ${hashedName}`);
-    console.log(`File uploaded extension: ${extension}`);
 
     return {
       originalName: file.originalname,
