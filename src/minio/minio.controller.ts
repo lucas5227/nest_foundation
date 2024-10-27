@@ -62,8 +62,9 @@ export class MinioController {
   }
 
   // File deletion
-  @Delete('delete/:fileName')
-  async deleteFile(@Param('fileName') fileName: string): Promise<string> {
+  @Delete('delete')
+  async deleteFile(@Body('fileName') fileName: string): Promise<string> {
+    console.log('fileName: ', fileName);
     return this.minioService.deleteFile(fileName);
   }
 

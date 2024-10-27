@@ -1,0 +1,29 @@
+<div class="container mt-5">
+    <h2><%= title %></h2>
+    <form action="/admin/board/write" method="post" onsubmit="return saveContent();">
+        <input type="hidden" name="cmd" value="" />
+        <input type="hidden" name="brd_id" value="0" />
+        <input type="hidden" name="post_id" value="<%= data.post ? data.post.data.post_id : '' %>" />
+        <input type="hidden" name="mem_id" value="1" />
+        <table class="table">
+            <tbody>
+            <tr>
+                <td><label for="data.post_content" class="form-label">내용</label></td>
+                <td>
+                    <div id="summernote"><%- data.post ? data.post.data.post_content : ''; %></div>
+                    <input type="hidden" id="summernote_content" name="post_content" />
+
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2" class="text-end">
+                    <button type="submit" class="btn btn-primary">작성하기</button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </form>
+</div>
+
+<script>
+</script>

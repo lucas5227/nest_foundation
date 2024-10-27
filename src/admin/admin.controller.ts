@@ -100,6 +100,18 @@ export class AdminController {
     };
   }
 
+  @Get('layout/main')
+  @Render('admin/_layout/layout')
+  async userMain() {
+    const menuTree = await this.MenuService.getMenu();
+    const boards = await this.MenuService.getBoards();
+    return {
+      page: 'layout/mainWrite.ejs',
+      title: '메인페이지 설정',
+      data: { menuTree, boards },
+    };
+  }
+
   @Get('layout/sitemap/write/:parent')
   @Render('admin/_layout/layout') // index.ejs 템플릿을 렌더링
   async menuWrite(@Param('parent') parent, @Query('update') men_id) {

@@ -7,8 +7,8 @@ async function drawDropzone(id, type, acceptedFiles) {
     return false;
   }
 
-  if(!acceptedFiles){
-    acceptedFiles =  'image/*';
+  if (!acceptedFiles) {
+    acceptedFiles = 'image/*';
   }
 
   const dropzone = new Dropzone(`#${id}`, {

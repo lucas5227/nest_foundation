@@ -51,7 +51,7 @@ export class MinioService {
     const hash = createHash('sha256')
       .update(file.originalname + Date.now().toString())
       .digest('hex');
-    const extension = path.extname(file.originalname); // Get the file extension
+    const extension = path.extname(file.originalname).toLowerCase(); // Get the file extension
     // console.log('extension: ', file.originalname); //IMG_1290.JPG
     const hashedName = `${hash}${extension}`; // Combine hash with the extension
 
@@ -92,7 +92,8 @@ export class MinioService {
       Bucket: bucketName,
       Key: fileName,
     };
-    await this.s3.deleteObject(params).promise();
+    const result= await this.s3.deleteObject(params).promise();
+    console.log('result', result);
     return `File deleted successfully: ${fileName}`;
   }
 
