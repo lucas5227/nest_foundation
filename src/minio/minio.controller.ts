@@ -8,26 +8,29 @@ import {
   Delete,
   Put,
   Res,
-  Query,
+  Query, Body,
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { MinioService } from './minio.service'; // Adjust the import path as needed
 import { Response } from 'express';
-import { Readable } from 'stream'; // Import Readable from stream module
+import { Readable } from 'stream';
+import { FileService } from '../file/file.service'; // Import Readable from stream module
 
 @Controller('minio')
 export class MinioController {
-  constructor(private readonly minioService: MinioService) {}
+  constructor(private readonly minioService: MinioService,
+              private readonly fileService: FileService) {}
 
   // File upload
   @Post('upload')
   @UseInterceptors(FileInterceptor('file')) // 'file' is the field name in form-data
   async uploadFile(
     @UploadedFile() file: Express.Multer.File,
-    @Query('type') type: string,
+    @Body('type') type: string,
   ): Promise<{ message: string; originalName: string; hashedName: string }> {
     console.log('type: ', type);
     const result = await this.minioService.uploadFile(file);
+    await this.fileService.insertFile(result, type);
     return {
       message: 'File uploaded successfully',
       originalName: result.originalName,
@@ -72,5 +75,10 @@ export class MinioController {
     @UploadedFile() newFile: Express.Multer.File,
   ): Promise<string> {
     return this.minioService.updateFile(oldFileName, newFile);
+  }
+
+  @Get('file/:name')
+  async getFile(@Param('name') name: string) {
+    return await this.fileService.getFileByHashedName(name);
   }
 }

@@ -10,7 +10,21 @@ export class FileEntity {
 
   @Property()
   @Index()
-  mem_id!: string;
+  mem_id!: number;
+
+  @Property()
+  file_type!: string;
+
+  @Property()
+  @Index()
+  file_original_name!: string;
+
+  @Property()
+  @Index()
+  file_hashed_name!: string;
+
+  @Property()
+  file_size!: number;
 
   @Property({ type: 'datetime', nullable: true })
   file_register_datetime?: Date;

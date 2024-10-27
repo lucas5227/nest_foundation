@@ -30,7 +30,6 @@ import { MinioConfigModule } from './minio-config/minio-config.module';
   imports: [
     MikroOrmModule.forRoot(mikroOrmConfig),
     AdminModule,
-    UserModule,
     MemberModule,
     PostModule,
     MenuModule,
@@ -40,8 +39,9 @@ import { MinioConfigModule } from './minio-config/minio-config.module';
     PopupModule,
     MinioModule,
     MinioConfigModule,
+    UserModule,
   ],
-  controllers: [AdminController, UserController, MemberController],
+  controllers: [],
   providers: [CommonService],
   // providers: [MemberService], // 이 줄을 제거합니다.
 })

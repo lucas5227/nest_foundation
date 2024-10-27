@@ -80,7 +80,7 @@
                                     <th>Image</th>
                                     <td>
                                         <div class="dropzone" id="ogImageDropzone" ></div>
-                                        <input type="hidden" name="og_image" value="http://localhost:9000/nf-bucket/db27f6dfff071c5d03075d0092d506069e62894df0e21355f458462c0aea238f.JPG">
+                                        <input type="hidden" name="og_image" value="<%= data.head.og_image ;%>">
                                         <script>drawDropzone('ogImageDropzone', 'og_image')</script>
                                     </td>
                                 </tr>
@@ -98,9 +98,9 @@
                     <tr>
                         <th>파비콘</th>
                         <td>
-<!--                            <div class="dropzone" id="faviconDropzone"></div>-->
-<!--                            <input type="hidden" name="favicon" value="<%= data.head.favicon ;%>">-->
-<!--                            <script>drawDropzone('faviconDropzone', 'favicon')</script>-->
+                            <div class="dropzone" id="faviconDropzone"></div>
+                            <input type="hidden" name="favicon" value="<%= data.head.favicon ;%>">
+                            <script>drawDropzone('faviconDropzone', 'favicon', '.ico, .png')</script>
                         </td>
                     </tr>
                     </tbody>

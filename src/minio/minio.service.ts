@@ -41,6 +41,7 @@ export class MinioService {
   async uploadFile(file: Express.Multer.File): Promise<{
     originalName: string;
     hashedName: string;
+    size: number;
     extension: string;
   }> {
     const bucketName =
@@ -65,6 +66,7 @@ export class MinioService {
     return {
       originalName: file.originalname,
       hashedName: hashedName,
+      size: file.size,
       extension: extension,
     };
   }
