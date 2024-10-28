@@ -9,7 +9,8 @@ import {
   Query,
   Redirect,
   Render,
-  Req, Res,
+  Req,
+  Res,
 } from '@nestjs/common';
 import { MemberService } from '../member/member.service';
 import { PostService } from '../post/post.service';
@@ -102,14 +103,22 @@ export class AdminController {
 
   @Get('layout/main')
   @Render('admin/_layout/layout')
-  async userMain() {
-    const menuTree = await this.MenuService.getMenu();
+  async userMain(@Param('update') update) {
+    // const menuTree = await this.MenuService.getMenu();
     const boards = await this.MenuService.getBoards();
+    const conf_keys = ['main_content'];
+    const main = await this.ConfigService.getConfig(conf_keys);
     return {
       page: 'layout/mainWrite.ejs',
       title: '메인페이지 설정',
-      data: { menuTree, boards },
+      data: { boards, main: main.main_content, update: update ? true : false },
     };
+  }
+
+  @Post('layout/main')
+  @Redirect('/admin/layout/main?update=true')
+  async userMainWrite(@Body() mainData) {
+    return await this.ConfigService.saveConfig(mainData);
   }
 
   @Get('layout/sitemap/write/:parent')
@@ -248,7 +257,8 @@ export class AdminController {
     @Body() writePost: Partial<PostEntity>,
     @Req() req: Request,
     @Res() res: Response, // Inject the response object
-  ): Promise<void> {  // Keep the return type as void
+  ): Promise<void> {
+    // Keep the return type as void
     let result: any = null;
 
     try {
@@ -262,7 +272,7 @@ export class AdminController {
 
       const brd_id = writePost.brd_id;
       if (result && brd_id) {
-        res.redirect(`/admin/board/${brd_id}`);  // Call redirect without return
+        res.redirect(`/admin/board/${brd_id}`); // Call redirect without return
       } else {
         res.status(400).send('Board ID not provided for redirect.');
       }

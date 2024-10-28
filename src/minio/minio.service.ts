@@ -92,7 +92,7 @@ export class MinioService {
       Bucket: bucketName,
       Key: fileName,
     };
-    const result= await this.s3.deleteObject(params).promise();
+    const result = await this.s3.deleteObject(params).promise();
     console.log('result', result);
     return `File deleted successfully: ${fileName}`;
   }

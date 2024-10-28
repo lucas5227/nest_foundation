@@ -12,6 +12,6 @@ export class ConfigEntity {
   @Index()
   conf_key!: string;
 
-  @Property({ nullable: true })
+  @Property({type: 'text', nullable: true })
   conf_val?: string;
 }
