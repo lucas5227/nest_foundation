@@ -53,6 +53,7 @@ async function drawDropzone(id, type, acceptedFiles) {
               e.preventDefault();
               e.stopPropagation();
               this.removeFile(mockFile);
+              deleteImage($('input[name=' + type + ']').val());
               $('input[name=' + type + ']').val('');
             }.bind(this),
           );
