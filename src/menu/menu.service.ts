@@ -105,7 +105,6 @@ export class MenuService {
     return men_id;
   }
 
-
   async getMenu() {
     const menus = await this.menuRepository.findAll();
     const menuTree = [];

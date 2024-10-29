@@ -53,38 +53,47 @@ $(document).ready(function () {
     let men_id = $(this).data('men_id');
     $(this).siblings().css('background-color', '');
     $(this).css('background-color', 'lightblue');
+
     if (depth == 1 || depth == 2) {
       let targetDepth = parseInt(depth) + 1;
       let children;
+
       if (depth == 1) {
-        children = menuTree[men_id].children;
+          children = menuTree[men_id].children;
       }
       if (depth == 2) {
         parent = $(`#addDepth${depth}`).data('parent');
-        children = menuTree[parent].children[men_id].children;
-      }
-      let html = '';
-      children.forEach((child) => {
-        if (child) {
-          html += `<tr class="depth-${targetDepth}" data-depth="${targetDepth}" data-men_id="${child.men_id}">
-                  <td><input type="checkbox" name="chk[]" value="${child.men_id}"></td>
-                  <td>${child.men_code}</td>
-                  <td>${child.men_title}</td>
-                  <td>${child.men_type}</td>
-                  <td>
-                      <div class="btn-group" role="group">
-                          <button class="btn btn-secondary btn-sm">▲</button>
-                          <button class="btn btn-secondary btn-sm">▼</button>
-                          <button class="btn btn-primary btn-sm" data-update="${child.men_id}">수정</button>
-                      </div>
-                  </td>
-              </tr>`;
+        // Check if parent exists in menuTree and has children
+        if (menuTree[parent] && menuTree[parent].children && menuTree[parent].children[men_id]) {
+          children = menuTree[parent].children[men_id].children;
         }
-      });
+      }
+      console.log(children);
+      let html = '';
+      if (children) {
+        children.forEach((child) => {
+          if (child) {
+            html += `<tr class="depth-${targetDepth}" data-depth="${targetDepth}" data-men_id="${child.men_id}">
+                            <td><input type="checkbox" name="chk[]" value="${child.men_id}"></td>
+                            <td>${child.men_code}</td>
+                            <td>${child.men_title}</td>
+                            <td>${child.men_type}</td>
+                            <td>
+                                <div class="btn-group" role="group">
+                                    <button class="btn btn-secondary btn-sm">▲</button>
+                                    <button class="btn btn-secondary btn-sm">▼</button>
+                                    <button class="btn btn-primary btn-sm" data-update="${child.men_id}">수정</button>
+                                </div>
+                            </td>
+                        </tr>`;
+          }
+        });
+      }
+
       if (html == '') {
         html = `<tr>
-                    <td colspan="5" class="text-center">하위 메뉴 없음</td>
-                </tr>`;
+                        <td colspan="5" class="text-center">하위 메뉴 없음</td>
+                    </tr>`;
       }
       $(`#addDepth${targetDepth}`).data('parent', men_id);
       $(`.depth-${targetDepth}-body`).html(html);

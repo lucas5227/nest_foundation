@@ -10994,30 +10994,35 @@ header.masthead h1, header.masthead .h1 {
   opacity: 1;
 }
 
-
 /* Custom CSS for dropdown-submenu */
 .dropdown-submenu {
   position: relative;
 }
 
+/* Position the dropdown submenu */
 .dropdown-submenu .dropdown-menu {
   top: 0;
-  left: 100%;
-  margin-top: -1px;
+  left: 100%; /* Positioning the submenu to the right */
+  margin-top: -1px; /* Aligns with parent */
 }
 
 /* Show the dropdown-submenu on hover */
 .dropdown-submenu:hover > .dropdown-menu {
-  display: block;
+  display: block; /* Show submenu when parent is hovered */
 }
 
-/* Custom styles for submenus */
+/* Ensure the nested dropdowns are hidden initially */
 .dropdown-menu > li > .dropdown-menu {
-  display: none;
-  position: absolute;
+  display: none; /* Initially hide nested dropdown menus */
+  position: absolute; /* Absolute positioning for dropdown */
   top: 0;
-  left: 100%;
+  left: 100%; /* Positioning the nested dropdowns */
   margin-top: 0;
   margin-left: 0;
   border-radius: 0.25rem;
+}
+
+/* Show nested dropdowns on hover */
+.dropdown-menu > li:hover > .dropdown-menu {
+  display: block; /* Show nested dropdown on hover */
 }
