@@ -8,7 +8,7 @@
     <!--          TODO:: user view title-->
     <title>TITLE</title>
     <!-- Favicon-->
-    <link rel="icon" type="image/x-icon" href="/user/assets/favicon.ico" />
+<!--    <link rel="icon" type="image/x-icon" href="/user/assets/favicon.ico" />-->
     <!-- Bootstrap Icons-->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
     <!-- Google fonts-->
@@ -65,7 +65,7 @@
 </nav>
 
 
-<%- include(page) %>
+<%- content ? content : include(page) %>
 
 <!-- Footer-->
 <footer class="bg-light py-5">

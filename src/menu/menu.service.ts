@@ -185,4 +185,9 @@ export class MenuService {
     const boards = await this.boardRepository.findAll();
     return boards;
   }
+
+  async getPage(men_id) {
+    const page = await this.pageRepository.findOne({ men_id });
+    return page;
+  }
 }
