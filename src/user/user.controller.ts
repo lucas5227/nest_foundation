@@ -17,6 +17,7 @@ export class UserController {
     const men_code = path.split('/').at(-1);
     const menu = menus.find((menu) => menu?.men_code === men_code);
     let content = null;
+    let link = null;
     //TODO: 파비콘 개발후 제거
     if (path === 'favicon.ico') {
       return res.status(204).end(); // 빈 응답 반환
@@ -34,7 +35,7 @@ export class UserController {
         }
       }
       if (menu.men_type === 'link') {
-        location.href = menu.link;
+        link = {url:menu.men_link, open:menu.men_link_window_open};
       }
     }
     let page = '../' + path + '.ejs'; // page는 path와 동일한 파일 이름으로 사용
@@ -57,6 +58,7 @@ export class UserController {
       page,
       menus,
       content,
+      link,
     };
 
     return res.render(route, data);

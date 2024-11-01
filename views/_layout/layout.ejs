@@ -64,8 +64,12 @@
     </div>
 </nav>
 
-
-<%- content ? content : include(page) %>
+<% if (content) { %>
+    <%- content %>
+<% } %>
+<% if (!content && !link) { %>
+    <%- include(page) %>
+<% } %>
 
 <!-- Footer-->
 <footer class="bg-light py-5">
@@ -84,5 +88,17 @@
 <!-- * * Activate your form at https://startbootstrap.com/solution/contact-forms * *-->
 <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *-->
 <script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script>
+<!-- Bootstrap core JavaScript-->
+<script src="/common/jquery/jquery.min.js"></script>
+<script src="/common/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+<!-- Core plugin JavaScript-->
+<script src="/common/jquery-easing/jquery.easing.min.js"></script>
+<script src="/common/function.js"></script>
+<script>
+    <%if(link){%>
+    moveLink('<%=link.url%>', <%=link.open%>);
+    <% } %>
+</script>
 </body>
 </html>

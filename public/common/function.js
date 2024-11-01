@@ -129,27 +129,25 @@ function extractImageSources(now, tempContent) {
 
   // 현재 이미지 소스 가져오기
   const currentImgElements = nowDoc.querySelectorAll('img');
-  const currentSrcs = Array.from(currentImgElements).map(img => img.src.trim().toLowerCase());
+  const currentSrcs = Array.from(currentImgElements).map((img) =>
+    img.src.trim().toLowerCase(),
+  );
 
   // 기존 이미지 소스 가져오기
   const existingImgElements = tempDoc.querySelectorAll('img');
-  const existingSrcs = Array.from(existingImgElements).map(img => img.src.trim().toLowerCase());
+  const existingSrcs = Array.from(existingImgElements).map((img) =>
+    img.src.trim().toLowerCase(),
+  );
 
   console.log('현재 이미지 소스:', currentSrcs);
   console.log('기존 이미지 소스:', existingSrcs);
 
   // 기존 이미지 소스 중 현재 소스에 없는 것들을 필터링
-  const missingSrcs = existingSrcs.filter(src => !currentSrcs.includes(src));
+  const missingSrcs = existingSrcs.filter((src) => !currentSrcs.includes(src));
 
   console.log('결과적으로 없어진 기존 이미지 소스:', missingSrcs);
   return missingSrcs;
 }
-
-
-
-
-
-
 
 // Function to save content from the Summernote editor to a hidden field
 function saveContent() {
@@ -218,5 +216,18 @@ function deleteOne(req, id) {
         alert('삭제에 실패했습니다.'); // Alert failure
       },
     });
+  }
+}
+
+function moveLink(url, openNew) {
+  if (openNew === 1) {
+    // window.open(url, '', 'width=600, height=800'); //열림
+    const newWin = window.open(url);
+    if (!newWin || newWin.closed || typeof newWin.closed == 'undefined') {
+      alert('팝업허용이 필요합니다.');
+    }
+    history.back();
+  } else {
+    window.location.href = url;
   }
 }
