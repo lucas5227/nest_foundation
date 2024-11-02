@@ -1,3 +1,4 @@
+//app.e2e-spec.ts
 import { Controller, Get, Param, Post, Res } from '@nestjs/common';
 import { Response } from 'express';
 import { MenuService } from '../menu/menu.service';
@@ -47,9 +48,9 @@ export class UserController {
     if (!isMenu && !singlePage.includes(path)) {
       route = '404'; // 없는 메뉴일 경우 404 페이지 설정
     } else if (singlePage.includes(path)) {
-      route = path;
+      route = path+".ejs";
     } else {
-      route = '_layout/layout'; // layout.ejs를 기본 레이아웃 파일로 사용
+      route = '_layout/layout.ejs'; // layout.ejs를 기본 레이아웃 파일로 사용
     }
     path = `domain/${path}`; // 예: 'domain/home.ejs'
 

@@ -19,6 +19,10 @@ describe('AppController (e2e)', () => {
     return request(app.getHttpServer())
       .get('/')
       .expect(200)
-      .expect('Hello World!');
+      .expect((res) => {
+        expect(res.headers['content-type']).toContain('text/html'); // HTML 형식인지 확인
+        expect(res.text).toContain('<html'); // 응답에 HTML 태그가 포함되어 있는지 확인
+        expect(res.text).toContain('<body'); // 응답에 body 태그가 포함되어 있는지 확인
+      });
   });
 });
