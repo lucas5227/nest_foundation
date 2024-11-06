@@ -105,7 +105,7 @@ export class MenuService {
     return men_id;
   }
 
-  async getMenu() {
+  async getMenuTree() {
     const menus = await this.menuRepository.findAll();
     const menuTree = [];
 
@@ -157,6 +157,32 @@ export class MenuService {
         menu.brd_skin = board.brd_skin;
       } else {
         console.log(`Page with men_id ${men_id} not found.`);
+      }
+    }
+
+    return menu;
+  }
+
+  async getOneMenuByMenCode(men_code: string) {
+    const menu = await this.menuRepository.findOne({ men_code });
+    if (!menu) {
+      throw new NotFoundException(`Post with id ${men_code} not found`); // 템플릿 리터럴로 수정
+    }
+    if (menu.men_type === 'page') {
+      const page = await this.pageRepository.findOne({ men_id:menu.men_id });
+      if (page) {
+        menu.page_content = page.page_content;
+      } else {
+        console.log(`Page with men_id ${menu.men_id} not found.`);
+      }
+    }
+    if (menu.men_type === 'board') {
+      const board = await this.boardRepository.findOne({ men_id:menu.men_id });
+      if (board) {
+        menu.brd_id = board.brd_id;
+        menu.brd_skin = board.brd_skin;
+      } else {
+        console.log(`Page with men_id ${menu.men_id} not found.`);
       }
     }
 

@@ -28,6 +28,7 @@ export class MenuEntity {
   @Property({ type: 'tinyint', default: 0 })
   men_link_window_open!: number;
 
+  brd_id?: number;
   brd_skin?: string;
 
   page_content?: string;

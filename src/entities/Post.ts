@@ -9,7 +9,7 @@ export class PostEntity {
 
   @Property()
   @Index()
-  brd_id!: string;
+  brd_id!: number;
 
   @Property({ nullable: true })
   @Index()

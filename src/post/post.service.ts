@@ -88,7 +88,7 @@ export class PostService {
    * @param brd_id 보드 id
    * @returns 모든 게시물 엔티티 배열
    */
-  async getListTotal(brd_id: string): Promise<number> {
+  async getListTotal(brd_id: number): Promise<number> {
     const total = await this.postRepository.count({ brd_id });
     return total;
   }

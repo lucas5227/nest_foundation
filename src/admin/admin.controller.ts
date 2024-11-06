@@ -92,7 +92,7 @@ export class AdminController {
   @Get('layout/sitemap')
   @Render('admin/_layout/layout')
   async siteMap() {
-    const menuTree = await this.MenuService.getMenu();
+    const menuTree = await this.MenuService.getMenuTree();
     const boards = await this.MenuService.getBoards();
     return {
       page: 'layout/list.ejs',
@@ -293,7 +293,7 @@ export class AdminController {
   @Get('board/:brd_id')
   @Render('admin/_layout/layout')
   async list(
-    @Param('brd_id') brd_id: string,
+    @Param('brd_id') brd_id: number,
     @Query('cat_id') cat_id: string,
     @Query('page') page: number,
   ) {
