@@ -25,16 +25,21 @@ export class PostService {
 
   /**
    * 모든 게시물 정보를 조회하는 메서드
+   * @param brd_id 게시판 ID
    * @param offset 시작 위치
    * @param limit 가져올 항목 수
    * @returns 모든 게시물 엔티티 배열
    */
-  async getListPost(offset: number, limit: number = 0): Promise<PostEntity[]> {
-    const posts = await this.postRepository.findAll({
-      limit: limit,
-      offset: offset,
-    });
-    
+  async getListPost(
+    brd_id: number,
+    offset: number,
+    limit: number = 0,
+  ): Promise<PostEntity[]> {
+    const posts = await this.postRepository.find(
+      { brd_id: brd_id },
+      { limit, offset },
+    );
+
     return posts;
   }
 

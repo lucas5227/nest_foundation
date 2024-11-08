@@ -13,11 +13,11 @@ export class PostEntity {
 
   @Property({ nullable: true })
   @Index()
-  cat_id?: string;
+  cat_id?: number;
 
   @Property()
   @Index()
-  mem_id!: string;
+  mem_id!: number;
 
   @Property({ length: 255 })
   post_title!: string;

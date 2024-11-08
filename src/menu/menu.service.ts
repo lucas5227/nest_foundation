@@ -166,7 +166,8 @@ export class MenuService {
   async getOneMenuByMenCode(men_code: string) {
     const menu = await this.menuRepository.findOne({ men_code });
     if (!menu) {
-      throw new NotFoundException(`Post with id ${men_code} not found`); // 템플릿 리터럴로 수정
+      return false;
+      // throw new NotFoundException(`Post with id ${men_code} not found`); // 템플릿 리터럴로 수정
     }
     if (menu.men_type === 'page') {
       const page = await this.pageRepository.findOne({ men_id:menu.men_id });

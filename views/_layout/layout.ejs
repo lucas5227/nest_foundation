@@ -64,11 +64,11 @@
     </div>
 </nav>
 
-<% if (content) { %>
-    <%- content %>
+<% if (content.page) { %>
+    <%- content.page %>
 <% } %>
-<% if (!content && !link) { %>
-    <%- include(skin) %>
+<% if (!content.page) { %>
+    <%- include(skinPath) %>
 <% } %>
 
 <!-- Footer-->
@@ -96,8 +96,8 @@
 <script src="/common/jquery-easing/jquery.easing.min.js"></script>
 <script src="/common/function.js"></script>
 <script>
-    <%if(link){%>
-    moveLink('<%=link.url%>', <%=link.open%>);
+    <%if(content.link){%>
+    moveLink('<%=content.link.url%>', <%=content.link.open%>);
     <% } %>
 </script>
 </body>

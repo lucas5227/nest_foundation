@@ -35,7 +35,7 @@
         </tr>
         </thead>
         <tbody>
-        <% data.posts.forEach((post) => { %>
+        <% content.posts.forEach((post) => { %>
             <tr>
                 <th scope="row">1</th>
                 <td><a href="/admin/post/<%= post.post_id %>"><%= post.post_title %></a></td>
@@ -48,22 +48,22 @@
         </tbody>
     </table>
 
-    <% if(paging.prevShow || paging.nextShow) { %>
+    <% if(content.paging.prevShow || content.paging.nextShow) { %>
         <!-- 페이지네이션 -->
         <nav aria-label="Page navigation">
             <ul class="pagination justify-content-center">
-                <% if(paging.prevShow) { %>
+                <% if(content.paging.prevShow) { %>
                     <li class="page-item">
-                        <a class="page-link" href="/admin/board/brd_key?page=<%= paging.start - 1; %>" tabindex="-1"
+                        <a class="page-link" href="/admin/board/brd_key?page=<%= content.paging.start - 1; %>" tabindex="-1"
                            aria-disabled="true">이전</a>
                     </li>
                 <% } %>
-                <% for(i = paging.start; i <= paging.end; i++){ %>
-                <li class="page-item <%=paging.now==i ? 'active' : ''%>"><a class="page-link" href="<%=paging.now%>"><%=i%></a></li>
+                <% for(i = content.paging.start; i <= content.paging.end; i++){ %>
+                <li class="page-item <%=content.paging.now==i ? 'active' : ''%>"><a class="page-link" href="<%=content.paging.now%>"><%=i%></a></li>
                 <% } %>
-                <% if(paging.nextShow) { %>
+                <% if(content.paging.nextShow) { %>
                     <li class="page-item">
-                        <a class="page-link" href="/admin/board/brd_key?page=<%= paging.end + 1 %>">다음</a>
+                        <a class="page-link" href="/admin/board/brd_key?page=<%= contentpaging.end + 1 %>">다음</a>
                     </li>
                 <% } %>
             </ul>
