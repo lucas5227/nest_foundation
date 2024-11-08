@@ -45,7 +45,7 @@
                                 <li><a class="dropdown-item" href="/<%= menu.men_code ;%>/<%= child.men_code ;%>"><%= child.men_title ;%></a></li>
                             <% } else { %>
                                     <li class="dropdown-submenu">
-                                        <a class="dropdown-item dropdown-toggle" href=/<%= menu.men_code ;%>/<%= child.men_code ;%>"><%= child.men_title ;%></a>
+                                        <a class="dropdown-item dropdown-toggle" href="/<%= menu.men_code ;%>/<%= child.men_code ;%>"><%= child.men_title ;%></a>
                                         <ul class="dropdown-menu">
                                             <% child.children.forEach(function(grand) {%>
                                             <li><a class="dropdown-item" href="/<%= menu.men_code ;%>/<%= child.men_code ;%>/<%= grand.men_code ;%>"><%= grand.men_title ;%></a></li>

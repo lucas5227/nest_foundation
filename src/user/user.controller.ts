@@ -1,10 +1,12 @@
 //app.e2e-spec.ts
-import { Controller, Get, Param, Post, Query, Res } from '@nestjs/common';
-import { Response } from 'express';
+import { Controller, Get, Param, Post, Query, Req, Res } from '@nestjs/common';
+import { Response, Request } from 'express';
 import { MenuService } from '../menu/menu.service';
 import { PostService } from '../post/post.service';
 import { CommonService } from '../common/common.service';
 import { ConfigService } from '../config/config.service';
+
+
 
 @Controller('')
 export class UserController {
@@ -19,6 +21,7 @@ export class UserController {
   async route(
     @Param('path') path: string,
     @Query('post_id') postId: string, // post_id 쿼리 파라미터 받기
+    @Req() req: Request,
     @Res() res: Response,
   ) {
     let skin = null;
@@ -38,8 +41,7 @@ export class UserController {
       const main_content = await this.ConfigService.getConfig(['main_content']);
       content.page = main_content['main_content'];
     }
-    console.log(content.page);
-    // //TODO: 파비콘 개발후 제거
+    // //TODO: 파비콘 개발후 제거f
     if (path === 'favicon.ico') {
       return res.status(204).end(); // 빈 응답 반환
     }
@@ -83,7 +85,10 @@ export class UserController {
     } else {
       route = '_layout/layout.ejs';
     }
-    path = `domain/${path}`;
+
+    const protocol = req.protocol;
+    const domain = req.get('host');
+    path = `${protocol}://${domain}/${path}`;
 
     const data = {
       path,
